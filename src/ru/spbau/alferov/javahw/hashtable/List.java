@@ -1,4 +1,4 @@
-package ru.spbau.alferov.javahw.hashable;
+package ru.spbau.alferov.javahw.hashtable;
 
 /**
  * The List class provides an implementation of singly linked list.

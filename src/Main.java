@@ -1,4 +1,4 @@
-import ru.spbau.alferov.javahw.hashable.*;
+import ru.spbau.alferov.javahw.hashtable.*;
 
 public class Main {
 
