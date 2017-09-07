@@ -9,9 +9,6 @@ public class Main {
 	        l.insert(i);
         }
 
-        System.out.print(l.getSize());
-        System.out.print(": ");
-
         for (List.Iterator it = l.listHead(); !it.isEnd(); it.advance()) {
             if ((Integer)it.get() == 7) {
                 l.erase(it);
@@ -21,6 +18,8 @@ public class Main {
 
         l.erase(l.listHead());
 
+        System.out.print(l.getSize());
+        System.out.print(": ");
 	    for (List.Iterator it = l.listHead(); !it.isEnd(); it.advance()) {
 	        Integer cur = (Integer)it.get();
             System.out.print(cur);
