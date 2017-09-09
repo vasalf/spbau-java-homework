@@ -3,6 +3,7 @@ import ru.spbau.alferov.javahw.hashtable.*;
 public class Main {
 
     public static void main(String[] args) {
+        /*
 	    List l = new List();
 
 	    for (int i = 1; i <= 17; i++) {
@@ -26,5 +27,14 @@ public class Main {
             System.out.print(" ");
         }
         System.out.println();
+        */
+
+        Hashtable h = new Hashtable();
+
+        h.put("a", "b");
+        System.out.println(h.get("a"));
+        System.out.println(h.put("a", "c"));
+        System.out.println(h.get("a"));
+        h.clear();
     }
 }
