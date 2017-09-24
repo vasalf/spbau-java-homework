@@ -1,5 +1,8 @@
 package ru.spbau.alferov.javahw.hashtable;
 
+import java.security.Key;
+import java.util.Iterator;
+
 /**
  * The Hashtable class provides an implementation of a hash-table
  * with both keys and values of type String. Separate chaining is
@@ -33,10 +36,10 @@ public class Hashtable {
         /**
          * Basic constructor from key and value.
          */
-        public Cell(String key_, String value_) {
-            key = key_;
+        public Cell(String elemKey, String elemValue) {
+            key = elemKey;
             keyHash = key.hashCode();
-            value = value_;
+            value = elemValue;
         }
 
         /**
@@ -102,8 +105,8 @@ public class Hashtable {
                 newStorage[i] = new List();
             }
             for (int i = 0; i < buckets; i++) {
-                for (List.Iterator it = storage[i].listHead(); !(it.isEnd()); it.advance()) {
-                    Cell c = (Cell)it.get();
+                for (Object obj : storage[i]) {
+                    Cell c = (Cell)obj;
                     newStorage[Hashtable.bucketIndex(c.getKeyHash(), newBuckets)].insert(c);
                 }
             }
@@ -120,15 +123,28 @@ public class Hashtable {
     }
 
     /**
-     * Get an iterator on a Cell with given Key in the bucket or null
-     * if there is no such Key.
+     * Get an iterator _after_ the Cell with given Key in the bucket
+     * or null if there is no such Key.
      */
-    private List.Iterator findKey(int bucket, String key) {
-        for (List.Iterator it = storage[bucket].listHead(); !(it.isEnd()); it.advance()) {
-            Cell c = (Cell)it.get();
+    private Iterator<Object> findKeyIter(int bucket, String key) {
+        Iterator<Object> it = storage[bucket].iterator();
+        while (it.hasNext()) {
+            Cell c = (Cell)it.next();
             if (c.getKey().compareTo(key) == 0) {
                 return it;
             }
+        }
+        return null;
+    }
+
+    /** Get a Cell with given Key in the bucket or null of there is
+     * no such Key.
+     */
+    private Cell findKey(int bucket, String key) {
+        for (Object obj : storage[bucket]) {
+            Cell c = (Cell)obj;
+            if (c.getKey().compareTo(key) == 0)
+                return c;
         }
         return null;
     }
@@ -147,11 +163,10 @@ public class Hashtable {
      */
     public String get(String key) {
         int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
-        List.Iterator it = findKey(bucket, key);
-        if (it == null) {
+        Cell c = findKey(bucket, key);
+        if (c == null) {
             return null;
         } else {
-            Cell c = (Cell)it.get();
             return c.value;
         }
     }
@@ -163,17 +178,16 @@ public class Hashtable {
      */
     public String put(String key, String value) {
         int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
-        List.Iterator it = findKey(bucket, key);
+        Cell cur = findKey(bucket, key);
         String ret;
-        if (it == null) {
+        if (cur == null) {
             Cell c = new Cell(key, value);
             storage[bucket].insert(c);
             currentSize++;
             ret = null;
         } else {
-            Cell c = (Cell)it.get();
-            ret = c.value;
-            c.value = value;
+            ret = cur.value;
+            cur.value = value;
         }
         rebuild();
         return ret;
@@ -186,12 +200,12 @@ public class Hashtable {
      */
     public String remove(String key) {
         int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
-        List.Iterator it = findKey(bucket, key);
+        Cell cur = findKey(bucket, key);
+        Iterator<Object> it = findKeyIter(bucket, key);
         if (it == null)
             return null;
-        Cell c = (Cell)it.get();
-        String ret = c.value;
-        storage[bucket].erase(it);
+        String ret = cur.value;
+        it.remove();
         currentSize--;
         return ret;
     }

@@ -1,12 +1,14 @@
 package ru.spbau.alferov.javahw.hashtable;
 
+import java.util.Iterator;
+
 /**
  * The List class provides an implementation of singly linked list.
  * The Hashtable class uses it to store the elements in one bucket.
  *
  * @author Vasily Alferov
  */
-public class List {
+public class List implements Iterable<Object> {
     /**
      * The Node class stores one Object and a pointer to the next
      * Node in the List.
@@ -43,47 +45,66 @@ public class List {
      * As long as all of the fields should be accessible from List
      * class, all of them are public.
      */
-    public class Iterator {
+    private class ListIterator implements Iterator<Object> {
         /**
          * The current Node.
          */
-        public Node current;
+        private Node current;
 
         /**
-         * The previous Node (used by List.erase).
+         * The previous Node (which we should remove when the remove
+         * method is called).
          */
-        public Node previous = null;
+        private Node previous = null;
 
         /**
-         * Basic constructor. Takes a Node supposing it is the head
-         * of the List and creates an Iterator pointing at it.
-         *
-         * @param head The head of the List
+         * As long as List is singly connected, we should store two
+         * last elements to remove from List correctly.
          */
-        public Iterator(Node head) {
-            current = head;
-        }
+        private Node previousOfPrevious = null;
 
         /**
-         * Get the object stored by current Node.
+         * Basic constructor. Creates an iterator pointing to the
+         * head of parent List.
          */
-        public Object get() {
-            return current.stored;
+        public ListIterator() {
+            current = List.this.head;
         }
 
         /**
          * Advance one position further.
+         *
+         * @return Element in position before the advance.
          */
-        public void advance() {
+        public Object next() {
+            Object ret = current.stored;
+            previousOfPrevious = previous;
             previous = current;
             current = current.next;
+            return ret;
         }
 
         /**
-         * Check whether we are pointing at the past-end element.
+         * Check whether there is a place to advance.
          */
-        public boolean isEnd() {
-            return current == null;
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        /**
+         * Remove the previous element.
+         */
+        public void remove() {
+            if (previous == null)
+                throw new IllegalStateException();
+            if (previousOfPrevious == null) {
+            /* We are erasing head of the List */
+                List.this.head = previous;
+            } else {
+            /* We are erasing some element from middle of the List */
+                previousOfPrevious.next = current;
+            }
+            List.this.size--;
         }
     }
 
@@ -115,27 +136,10 @@ public class List {
     }
 
     /**
-     * Get the Iterator pointing at the List head.
+     * Get the Iterator (List implements Iterable interface)
      */
-    public Iterator listHead() {
-        return new Iterator(head);
-    }
-
-    /**
-     * Erase an element by an Iterator.
-     *
-     * @param which An iterator pointing at the element that will be
-     *              erased.
-     */
-    public void erase(Iterator which) {
-        if (which.previous == null) {
-            /* We are erasing head of the List */
-            head = head.next;
-        } else {
-            /* We are erasing some element from middle of the List */
-            which.previous.next = which.current.next;
-        }
-        size--;
+    public Iterator<Object> iterator() {
+        return new ListIterator();
     }
 
     /**
