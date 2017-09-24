@@ -13,7 +13,7 @@ public class List {
      * As long as all of the fields can be modified/accessed by List
      * methods, all of them are public.
      */
-    private class Node {
+    private static class Node {
         /**
          * An Object stored in the Node.
          */
@@ -60,7 +60,7 @@ public class List {
          *
          * @param head The head of the List
          */
-        Iterator(Node head) {
+        public Iterator(Node head) {
             current = head;
         }
 

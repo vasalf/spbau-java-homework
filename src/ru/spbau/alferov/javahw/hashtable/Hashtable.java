@@ -12,16 +12,18 @@ public class Hashtable {
     /**
      * The Cell class stores a single pair of key and value.
      */
-    private class Cell {
+    private static class Cell {
         /**
          * The key stored in the Cell. As long as it should not be
          * modified, the access is private.
          */
         private String key;
+
         /**
          * The key's hash. It is computed in the constructor.
          */
         private int keyHash;
+
         /**
          * The value stored in the Cell. As long as it is mutable,
          * the access is public.
@@ -31,7 +33,7 @@ public class Hashtable {
         /**
          * Basic constructor from key and value.
          */
-        Cell(String key_, String value_) {
+        public Cell(String key_, String value_) {
             key = key_;
             keyHash = key.hashCode();
             value = value_;
@@ -70,8 +72,21 @@ public class Hashtable {
      */
     public Hashtable() {
         storage = new List[buckets];
-        for (int i = 0; i < buckets; i++)
+        for (int i = 0; i < buckets; i++) {
             storage[i] = new List();
+        }
+    }
+
+    /**
+     * Get the index of buckets in which an element with given hash
+     * should be stored.
+     *
+     * @param buckets Total number of buckets in the Hashtable.
+     */
+    private static int bucketIndex(int hash, int buckets) {
+        /* Hashcode may be negative, so we must return
+         * the mathematical modulo. */
+        return ((hash % buckets) + buckets) % buckets;
     }
 
     /**
@@ -81,18 +96,19 @@ public class Hashtable {
      */
     private void rebuild() {
         if (2 * currentSize >= buckets) {
-            int new_buckets = buckets;
-            List[] new_storage = new List[new_buckets];
-            for (int i = 0; i < new_buckets; i++)
-                new_storage[i] = new List();
+            int newBuckets = buckets;
+            List[] newStorage = new List[newBuckets];
+            for (int i = 0; i < newBuckets; i++) {
+                newStorage[i] = new List();
+            }
             for (int i = 0; i < buckets; i++) {
                 for (List.Iterator it = storage[i].listHead(); !(it.isEnd()); it.advance()) {
                     Cell c = (Cell)it.get();
-                    new_storage[c.getKeyHash() % new_buckets].insert(c);
+                    newStorage[Hashtable.bucketIndex(c.getKeyHash(), newBuckets)].insert(c);
                 }
             }
-            buckets = new_buckets;
-            storage = new_storage;
+            buckets = newBuckets;
+            storage = newStorage;
         }
     }
 
@@ -110,8 +126,9 @@ public class Hashtable {
     private List.Iterator findKey(int bucket, String key) {
         for (List.Iterator it = storage[bucket].listHead(); !(it.isEnd()); it.advance()) {
             Cell c = (Cell)it.get();
-            if (c.getKey().compareTo(key) == 0)
+            if (c.getKey().compareTo(key) == 0) {
                 return it;
+            }
         }
         return null;
     }
@@ -120,7 +137,7 @@ public class Hashtable {
      * Checks if there exists a Cell with a given key.
      */
     public boolean contains(String key) {
-        int bucket = key.hashCode() % buckets;
+        int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
         return findKey(bucket, key) != null;
     }
 
@@ -129,11 +146,11 @@ public class Hashtable {
      * such Key
      */
     public String get(String key) {
-        int bucket = key.hashCode() % buckets;
+        int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
         List.Iterator it = findKey(bucket, key);
-        if (it == null)
+        if (it == null) {
             return null;
-        else {
+        } else {
             Cell c = (Cell)it.get();
             return c.value;
         }
@@ -145,7 +162,7 @@ public class Hashtable {
      *         with given Key.
      */
     public String put(String key, String value) {
-        int bucket = key.hashCode() % buckets;
+        int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
         List.Iterator it = findKey(bucket, key);
         String ret;
         if (it == null) {
@@ -168,7 +185,7 @@ public class Hashtable {
      *         no Cell with given Key.
      */
     public String remove(String key) {
-        int bucket = key.hashCode() % buckets;
+        int bucket = Hashtable.bucketIndex(key.hashCode(), buckets);
         List.Iterator it = findKey(bucket, key);
         if (it == null)
             return null;
