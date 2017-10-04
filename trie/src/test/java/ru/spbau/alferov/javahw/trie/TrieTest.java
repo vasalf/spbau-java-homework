@@ -9,11 +9,17 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class TrieTest {
+    /**
+     * Checks that construction does not fail.
+     */
     @Test
     public void construct() {
         Trie tr = new Trie();
     }
 
+    /**
+     * Checks behaviour of the returned value of add.
+     */
     @Test
     public void add() {
         Trie tr = new Trie();
@@ -24,6 +30,9 @@ public class TrieTest {
         assertEquals(true, tr.add("abcd"));
     }
 
+    /**
+     * Checks the contains() function.
+     */
     @Test
     public void contains() {
         Trie tr = new Trie();
@@ -36,6 +45,9 @@ public class TrieTest {
         assertEquals(false, tr.contains("abcde"));
     }
 
+    /**
+     * Checks the remove() function behaviour and returned value.
+     */
     @Test
     public void remove() {
         Trie tr = new Trie();
@@ -51,6 +63,10 @@ public class TrieTest {
         assertEquals(true, tr.contains("abcd"));
     }
 
+    /**
+     * Checks that the remove() function works correctly being asked
+     * to remove a non-existent element.
+     */
     @Test
     public void removeNonExistent() {
         Trie tr = new Trie();
@@ -60,6 +76,9 @@ public class TrieTest {
         assertEquals(false, tr.remove("abcd"));
     }
 
+    /**
+     * Checks the size() function behaviour.
+     */
     @Test
     public void size() {
         Trie tr = new Trie();
@@ -73,6 +92,9 @@ public class TrieTest {
         assertEquals(1, tr.size());
     }
 
+    /**
+     * Checks the howManyStartsWithPrefix() function.
+     */
     @Test
     public void howManyStartsWithPrefix() {
         Trie tr = new Trie();
@@ -101,6 +123,11 @@ public class TrieTest {
         assertEquals(7, tr.howManyStartsWithPrefix(""));
     }
 
+    /**
+     * Checks the behaviour of serialize() function: constructs a
+     * Trie, seralizes and deserializes it and checks the results
+     * on equality.
+     */
     @Test
     public void serialize() throws IOException, ClassNotFoundException {
         String put[] = {"abcd", "efgh", "ijkl", "abdf", "a", ""};
