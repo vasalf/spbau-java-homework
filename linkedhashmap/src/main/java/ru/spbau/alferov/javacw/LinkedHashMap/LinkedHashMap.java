@@ -172,14 +172,16 @@ public class LinkedHashMap<K extends Comparable<K>,V> extends AbstractMap<K,V> {
     public V put(K key, V value) {
         Entry<K,V> entry = findEntry(bucketIndex(key.hashCode()), key);
         if (entry != null) {
+            V ret = entry.getValue();
             entry.setValue(value);
             rebuild();
-            return entry.getValue();
+            return ret;
         } else {
             LinkedHashMapEntry newEntry = new LinkedHashMapEntry(key, value);
             inOrder.addFirst(newEntry);
             newEntry.setListPosition(inOrder.iterator());
             storage[bucketIndex(key.hashCode())].add(newEntry);
+            size++;
             rebuild();
             return null;
         }
@@ -201,6 +203,7 @@ public class LinkedHashMap<K extends Comparable<K>,V> extends AbstractMap<K,V> {
         LinkedHashMapEntry entry = (LinkedHashMapEntry)findEntry(bucketIndex(key.hashCode()), key);
         if (entry == null)
             return null;
+        size--;
         entry.removeFromMap();
         Iterator<Entry<K,V>> iterator = findKeyIter(bucketIndex(key.hashCode()), key);
         iterator.remove();
