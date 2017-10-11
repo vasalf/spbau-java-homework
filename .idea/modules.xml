@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile_main.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile_main.iml" group="zipfile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile_test.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile_test.iml" group="zipfile" />
     </modules>
   </component>
 </project>
