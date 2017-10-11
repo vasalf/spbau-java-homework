@@ -106,7 +106,39 @@ public class LinkedHashMap<K extends Comparable<K>,V> extends AbstractMap<K,V> {
         return new AbstractSet<Entry<K, V>>() {
             @Override
             public Iterator<Entry<K, V>> iterator() {
-                return inOrder.descendingIterator();
+                return new Iterator<Entry<K, V>>() {
+                    Iterator<Entry<K, V>> wrap = inOrder.descendingIterator();
+                    LinkedHashMapEntry entry = null;
+
+                    private void skipUntilInMap() {
+                        if (!wrap.hasNext()) {
+                            entry = null;
+                            return;
+                        }
+                        entry = (LinkedHashMapEntry)wrap.next();
+                        while (wrap.hasNext() && !entry.isYetInMap()) {
+                            entry = (LinkedHashMapEntry)wrap.next();
+                        }
+                        if (!wrap.hasNext() && (entry == null || !entry.isYetInMap()))
+                            entry = null;
+                    }
+
+                    @Override
+                    public boolean hasNext() {
+                        if (entry == null)
+                            skipUntilInMap();
+                        return entry != null;
+                    }
+
+                    @Override
+                    public Entry<K, V> next() {
+                        if (entry == null)
+                            skipUntilInMap();
+                        Entry<K,V> ret = entry;
+                        skipUntilInMap();
+                        return ret;
+                    }
+                };
             }
 
             @Override

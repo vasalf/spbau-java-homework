@@ -9,6 +9,7 @@ public class Main {
         lhm.put("def", 2);
         lhm.put("ghi", 3);
         lhm.put("123", 4);
+        lhm.put("567", 5);
 
         for (Map.Entry<String, Integer> entry : lhm.entrySet()) {
             System.out.print(entry.getKey());
@@ -16,5 +17,12 @@ public class Main {
             System.out.println(entry.getValue());
         }
 
+        lhm.remove("ghi");
+
+        for (Map.Entry<String, Integer> entry : lhm.entrySet()) {
+            System.out.print(entry.getKey());
+            System.out.print(" ");
+            System.out.println(entry.getValue());
+        }
     }
 }
