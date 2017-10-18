@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree.iml" filepath="$PROJECT_DIR$/.idea/modules/tree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_main.iml" group="tree" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_test.iml" group="tree" />
     </modules>
   </component>
 </project>
