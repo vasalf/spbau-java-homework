@@ -2,6 +2,7 @@ group 'javahw'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
@@ -17,11 +18,5 @@ dependencies {
 jar {
     manifest {
         attributes 'Main-Class': 'Main'
-    }
-}
-
-test {
-    useJUnit {
-        include '**ru.spbau.alferov.javahw.matrices.*'
     }
 }

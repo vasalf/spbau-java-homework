@@ -59,10 +59,11 @@ public class Matrix {
      *
      * @throws IllegalArgumentException If an even size is given.
      */
-    public Matrix(int N) throws IllegalArgumentException {
-        if (N % 2 == 0)
+    public Matrix(int n) throws IllegalArgumentException {
+        if (n % 2 == 0) {
             throw new IllegalArgumentException("Size of the Matrix must be odd.");
-        size = N;
+        }
+        size = n;
         columns = new Column[size];
         for (int i = 0; i < size; i++) {
             columns[i] = new Column();
@@ -90,11 +91,14 @@ public class Matrix {
             throw new IllegalArgumentException("Size of given matrix must be odd.");
 
         columns = new Column[size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             columns[i] = new Column();
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
+        }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 columns[j].setElement(i, array[i][j]);
+            }
+        }
     }
 
     /**
@@ -133,7 +137,8 @@ public class Matrix {
         int nextIndex = 0;
         for (int loop = 0; loop <= (size / 2); loop++) {
             // Beginning of the current loop position.
-            int loopStartRow, loopStartColumn;
+            int loopStartRow;
+            int loopStartColumn;
             if (loop == 0) {
                 loopStartRow = loopStartColumn = size / 2;
             } else {

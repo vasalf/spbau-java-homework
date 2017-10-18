@@ -36,10 +36,10 @@ public class MatrixTest {
      */
     @Test
     public void constructionByOddNumber() {
-        Matrix size1 = new Matrix(1);
-        Matrix size3 = new Matrix(3);
-        Matrix size5 = new Matrix(5);
-        Matrix size179 = new Matrix(179);
+        new Matrix(1);
+        new Matrix(3);
+        new Matrix(5);
+        new Matrix(179);
     }
 
     /**
@@ -60,7 +60,7 @@ public class MatrixTest {
     @Test
     public void constructByOddSquareMatrix() {
         int[][] a1 = {{1}};
-        int[][] a3 = {{1,2,3},{4,5,6},{7,8,9}};
+        int[][] a3 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         Matrix m1 = new Matrix(a1);
         Matrix m3 = new Matrix(a3);
     }
@@ -231,5 +231,13 @@ public class MatrixTest {
             assertEquals(expected[currentIndex++], x);
         }
         assertEquals(currentIndex, 9);
+    }
+
+    /**
+     * Checks that construction from a null array fails.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testNullConstruction() {
+        Matrix m = new Matrix(null);
     }
 }
