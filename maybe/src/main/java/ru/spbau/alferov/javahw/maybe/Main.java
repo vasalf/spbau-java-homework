@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 
 public class Main {
+    /**
+     * This function returns an ArrayList of integers that could be
+     * read from each line of given file. If not an integer is stored
+     * in some line, it writes Maybe.nothing() to the corresponding
+     * cell of the returned value.
+     */
     private static ArrayList<Maybe<Integer>> readFromFile(String filename) throws IOException {
         BufferedReader isr = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
         ArrayList<Maybe<Integer>> res  = new ArrayList<>();
@@ -21,6 +27,14 @@ public class Main {
         return res;
     }
 
+    /**
+     * This function writes squares of given integers to the lines of
+     * given file. If Maybe.nothing() is given, "null" is written to
+     * the corresponding line of output file.
+     *
+     * @throws MaybeException is never thrown but javac can't prove
+     * it, so this should be added to the throws() list.
+     */
     private static void writeSquaresToFile(String filename, ArrayList<Maybe<Integer>> list) throws IOException, MaybeException {
         PrintStream ps = new PrintStream(filename);
         for (Maybe<Integer> mb : list) {
@@ -33,6 +47,14 @@ public class Main {
         }
     }
 
+    /**
+     * Application takes two parameters: input and output file.
+     * For each line of input file it writes a new line to the
+     * output file.
+     * If an integer is written on some line of input file, it writes
+     * its square to the corresponding line of output file, otherwise
+     * it writes the string "null".
+     */
     public static void main(String args[]) {
         if (args.length != 2) {
             System.err.println("Wrong number of arguments");

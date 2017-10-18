@@ -5,6 +5,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MaybeTest {
+
+    /**
+     * Tests that just() static constructor works correctly.
+     * In particular, it creates a stored value and get() method
+     * returns the value expected from him.
+     */
     @Test
     public void just() throws Exception {
         Maybe<String> abc = Maybe.just("abc");
@@ -15,6 +21,11 @@ public class MaybeTest {
         assertEquals("", empty.get());
     }
 
+    /**
+     * Tests that nothing() static constructor works correctly.
+     * In particular, it creates a non-stored value and get() throws
+     * MaybeException.
+     */
     @Test
     public void nothing() throws Exception {
         Maybe<Double> md = Maybe.nothing();
@@ -28,6 +39,11 @@ public class MaybeTest {
         assertTrue("Did not catch the MaybeException", false);
     }
 
+    /**
+     * Tests that map() function works correctly.
+     * In particular, it works for Maybe.nothing() and it works for
+     * either same or different types (T and U).
+     */
     @Test
     public void map() throws Exception {
         Maybe<String> abc = Maybe.just("abc");
