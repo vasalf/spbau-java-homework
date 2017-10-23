@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_main.iml" group="hashtable" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_test.iml" group="hashtable" />
+
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_main.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_main.iml" group="matrices" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_test.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_test.iml" group="matrices" />
+
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
     </modules>
   </component>
