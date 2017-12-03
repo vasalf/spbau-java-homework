@@ -2,6 +2,8 @@ package ru.spbau.alferov.javahw.calculator;
 
 import org.junit.Test;
 
+import java.util.EmptyStackException;
+
 import static org.junit.Assert.*;
 
 public class MyStackTest {
@@ -72,4 +74,19 @@ public class MyStackTest {
         assertTrue(stack.empty());
     }
 
+    /**
+     * Tests that peek() from empty stack throws EmptyStackException
+     */
+    @Test(expected = EmptyStackException.class)
+    public void peekEmptyStackException() {
+        new MyStack().peek();
+    }
+
+    /**
+     * Tests that pop() from empty stack throws EmptyStackException
+     */
+    @Test(expected = EmptyStackException.class)
+    public void popEmptyStackException() {
+        new MyStack().pop();
+    }
 }

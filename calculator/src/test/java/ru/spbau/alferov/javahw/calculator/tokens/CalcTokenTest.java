@@ -65,4 +65,93 @@ public class CalcTokenTest {
         token.evaluate(mockedStack);
         assertEquals(3, someAnswer);
     }
+
+
+    /**
+     * Tests creation and function of IntegerConstant
+     */
+    @Test
+    public void testIntegerConstant() {
+        CalcToken token = new IntegerConstant(179);
+        testType(token);
+
+        MyStack<Integer> mockedStack = mock(MyStack.class);
+        someAnswer = 0;
+        when(mockedStack.push(anyInt())).thenAnswer(invocation -> {
+            someAnswer = (Integer)invocation.getArguments()[0];
+            return someAnswer;
+        });
+        token.evaluate(mockedStack);
+        assertEquals(179, someAnswer);
+    }
+
+    /**
+     * Tests creation and function of MinusOperator
+     */
+    @Test
+    public void testMinusOperator() {
+        CalcToken token = new MinusOperator();
+        testType(token);
+        testOperator(token);
+
+        MyStack<Integer> mockedStack = mock(MyStack.class);
+        when(mockedStack.pop()).thenReturn(239, 179);
+        someAnswer = 0;
+        when(mockedStack.push(anyInt())).thenAnswer(invocation -> {
+            someAnswer = (Integer)invocation.getArguments()[0];
+            return someAnswer;
+        });
+        token.evaluate(mockedStack);
+        assertEquals(-60, someAnswer);
+    }
+
+    /**
+     * Tests creation and function of MultiplicationOperator
+     */
+    @Test
+    public void testMultiplicationOperator() {
+        CalcToken token = new MultiplicationOperator();
+        testType(token);
+        testOperator(token);
+
+        MyStack<Integer> mockedStack = mock(MyStack.class);
+        when(mockedStack.pop()).thenReturn(-2, 3);
+        someAnswer = 0;
+        when(mockedStack.push(anyInt())).thenAnswer(invocation -> {
+            someAnswer = (Integer)invocation.getArguments()[0];
+            return someAnswer;
+        });
+        token.evaluate(mockedStack);
+        assertEquals(-6, someAnswer);
+    }
+
+    /**
+     * Tests creation and function of OpeningBracket
+     */
+    @Test
+    public void testOpeningBracket() {
+        CalcToken token = new OpeningBracket();
+        assertTrue(token.isOpeningBracket());
+        testType(token);
+    }
+
+    /**
+     * Tests creation and function of PlusOperator
+     */
+    @Test
+    public void testPlusOperator() {
+        CalcToken token = new PlusOperator();
+        testType(token);
+        testOperator(token);
+
+        MyStack<Integer> mockedStack = mock(MyStack.class);
+        when(mockedStack.pop()).thenReturn(-2, 3);
+        someAnswer = 0;
+        when(mockedStack.push(anyInt())).thenAnswer(invocation -> {
+            someAnswer = (Integer)invocation.getArguments()[0];
+            return someAnswer;
+        });
+        token.evaluate(mockedStack);
+        assertEquals(1, someAnswer);
+    }
 }

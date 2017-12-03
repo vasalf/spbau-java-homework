@@ -37,7 +37,13 @@ public class Calculator {
      */
     int calculate(@NotNull List<CalcToken> tokens) throws EmptyStackException, ParseException{
         for (CalcToken token : tokens) {
-            token.evaluate(currentState);
+            try {
+                token.evaluate(currentState);
+            } catch (EmptyStackException e) {
+                ParseException p = new ParseException("Parse error", tokens.size());
+                p.addSuppressed(e);
+                throw p;
+            }
         }
 
         int ans = currentState.pop();
