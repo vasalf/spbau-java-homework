@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="matrices_main" target="1.8" />
       <module name="matrices_test" target="1.8" />
+      <module name="reflector_main" target="1.8" />
+      <module name="reflector_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
