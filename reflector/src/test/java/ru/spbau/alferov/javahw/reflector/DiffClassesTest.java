@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -232,6 +233,14 @@ public class DiffClassesTest {
     private static class EmptyGenericTKexTClass<T, K extends T> { }
 
     private static class EmptyGenericKTexKClass<K, T extends K> { }
+
+    private static class GenericTKHasPublicSetTConsumer<T, K> {
+        public void foo(Set<T> x) { }
+    }
+
+    private static class GenericTKHasPublicSetKConsumer<T, K> {
+        public void foo(Set<K> x) { }
+    }
 
     /// Lower are the tests
 
@@ -625,6 +634,17 @@ public class DiffClassesTest {
     @Test
     public void similarGenericExtends() {
         testEquality(EmptyGenericKTexKClass.class, EmptyGenericKTexKClass.class);
+    }
+
+    /**
+     * Tests that selection of generic parameters affect the diffClasses verdict.
+     */
+    @Test
+    public void genericSelection() {
+        final String desiredDiff = "@@\n" +
+                "- public void foo(Set<T>);\n" +
+                "+ public void foo(Set<K>);\n";
+        testInequality(GenericTKHasPublicSetTConsumer.class, GenericTKHasPublicSetKConsumer.class, desiredDiff);
     }
 
     /**
