@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
@@ -240,6 +241,18 @@ public class DiffClassesTest {
 
     private static class GenericTKHasPublicSetKConsumer<T, K> {
         public void foo(Set<K> x) { }
+    }
+
+    private static class HasMethodWithWildcardGenericParameter {
+        public void foo(TreeSet<? extends Comparable> ts) { }
+    }
+
+    private static class HasMethodWithNamedGenericParameter {
+        public <T extends Comparable> void foo(TreeSet<T> ts) { }
+    }
+
+    private static class HasMethodWithSuperWildcardGenericParameter {
+        public void foo(Set<? super Set> s) { }
     }
 
     /// Lower are the tests
@@ -645,6 +658,33 @@ public class DiffClassesTest {
                 "- public void foo(Set<T>);\n" +
                 "+ public void foo(Set<K>);\n";
         testInequality(GenericTKHasPublicSetTConsumer.class, GenericTKHasPublicSetKConsumer.class, desiredDiff);
+    }
+
+    /**
+     * Tests that class with method with wildcard generic parameter is equal to itself.
+     */
+    @Test
+    public void oneMethodWithWildcardGenericParameterSelfTest() {
+        testEquality(HasMethodWithWildcardGenericParameter.class, HasMethodWithWildcardGenericParameter.class);
+    }
+
+    /**
+     * Tests that class with method with wildcard generic parameter is not equal to just generic.
+     */
+    @Test
+    public void wildcardGenericMethodAndGenericMethod() {
+        final String desiredDiff = "@@\n" +
+                "- public void foo(TreeSet<? extends Comparable>)\n" +
+                "+ public <T extends Comparable> void foo(TreeSet<T>)\n";
+        testInequality(HasMethodWithWildcardGenericParameter.class, HasMethodWithNamedGenericParameter.class, desiredDiff);
+    }
+
+    /**
+     * Tests that super wildcard parameter is OK.
+     */
+    @Test
+    public void superWildcardParameterSelfTest() {
+        testEquality(HasMethodWithSuperWildcardGenericParameter.class, HasMethodWithSuperWildcardGenericParameter.class);
     }
 
     /**
