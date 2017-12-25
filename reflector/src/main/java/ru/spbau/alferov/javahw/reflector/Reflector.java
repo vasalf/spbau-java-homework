@@ -105,8 +105,8 @@ public class Reflector {
 
         boolean areDifferent = false;
         int i = 0, j = 0;
-        while (i < aStruct.size() && j < bStruct.size()) {
-            if (j == bStruct.size() || aStruct.get(i).compareTo(bStruct.get(j)) < 0) {
+        while (i < aStruct.size() || j < bStruct.size()) {
+            if (j == bStruct.size() || (i != aStruct.size() && aStruct.get(i).compareTo(bStruct.get(j)) < 0)) {
                 // aStruct.get(i) is less
                 if (!areDifferent) {
                     out.println("@@");
@@ -114,7 +114,7 @@ public class Reflector {
                 areDifferent = true;
                 out.println("+ " + aStruct.get(i));
                 i++;
-            } else if (i == aStruct.size() || aStruct.get(i).compareTo(bStruct.get(j)) > 0) {
+            } else if (i == aStruct.size() || (j != bStruct.size() && aStruct.get(i).compareTo(bStruct.get(j)) > 0)) {
                 // bStruct.get(j) is less
                 if (!areDifferent) {
                     out.println("@@");
