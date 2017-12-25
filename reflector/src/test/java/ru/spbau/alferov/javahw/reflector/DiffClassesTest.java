@@ -84,6 +84,8 @@ public class DiffClassesTest {
     private static void testEquality(Class<?> a, Class<?> b) {
         ByteArrayOutputStream res = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(res);
+        if ((!Reflector.diffClasses(a, b, ps)) && !getContent(res).isEmpty())
+            System.out.print(getContent(res));
         assertTrue(Reflector.diffClasses(a, b, ps));
         assertTrue(getContent(res).isEmpty());
     }
@@ -145,19 +147,19 @@ public class DiffClassesTest {
     }
 
     private static class HasPackagePrivateRunnerFoo {
-        private void foo() { }
+        void foo() { }
     }
 
     private static class HasPackagePrivateRunnerBar {
-        private void bar() { }
+        void bar() { }
     }
 
     private static class HasPublicRunnerFoo {
-        private void foo() { }
+        public void foo() { }
     }
 
     private static class  HasPublicRunnerBar {
-        private void bar() { }
+        public void bar() { }
     }
 
     private static class HasPublicIntSupplierFoo {
@@ -199,7 +201,11 @@ public class DiffClassesTest {
         public void foo(int x, char y) { }
     }
 
-    private static class OverloadingAndExtendingB extends HasPublicIntIntBiConsumerFoo {
+    private static class HasPublicIntIntBiConsumerFoo2 {
+        public void foo(int x, int y) { }
+    }
+
+    private static class OverloadingAndExtendingB extends HasPublicIntIntBiConsumerFoo2 {
         public void foo(int x, char y) { }
     }
 
@@ -303,8 +309,8 @@ public class DiffClassesTest {
     @Test
     public void privateFieldWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- private int a;\n" +
-                "+ private int b;\n";
+                "- private int a\n" +
+                "+ private int b\n";
         testInequality(HasPrivateIntFieldA.class, HasPrivateIntFieldB.class, desiredDiff);
     }
 
@@ -314,8 +320,8 @@ public class DiffClassesTest {
     @Test
     public void packagePrivateFieldsWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- int a;\n" +
-                "+ int b;\n";
+                "- int a\n" +
+                "+ int b\n";
         testInequality(HasPackagePrivateIntFieldA.class, HasPackagePrivateIntFieldB.class, desiredDiff);
     }
 
@@ -325,8 +331,8 @@ public class DiffClassesTest {
     @Test
     public void publicFieldsWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- public int a;\n" +
-                "+ public int b;\n";
+                "- public int a\n" +
+                "+ public int b\n";
         testInequality(HasPublicIntFieldA.class, HasPublicIntFieldB.class, desiredDiff);
     }
 
@@ -336,8 +342,8 @@ public class DiffClassesTest {
     @Test
     public void privateStaticAndNonStaticFields() {
         final String desiredDiff = "@@\n" +
-                "- private int a;\n" +
-                "+ private static int a;\n";
+                "- private int a\n" +
+                "+ private static int a\n";
         testInequality(HasPublicIntFieldA.class, HasPrivateStaticIntFieldA.class, desiredDiff);
     }
 
@@ -347,8 +353,8 @@ public class DiffClassesTest {
     @Test
     public void differentTypesPrivateFields() {
         final String desiredDiff = "@@\n" +
-                "- private int a;\n" +
-                "+ private char a;\n";
+                "- private int a\n" +
+                "+ private char a\n";
         testInequality(HasPrivateIntFieldA.class, HasPrivateCharFieldA.class, desiredDiff);
     }
 
@@ -358,8 +364,8 @@ public class DiffClassesTest {
     @Test
     public void publicAndPackagePrivateFields() {
         final String desiredDiff = "@@\n" +
-                "- private int a;\n" +
-                "+ int a;\n";
+                "- private int a\n" +
+                "+ int a\n";
         testInequality(HasPrivateIntFieldA.class, HasPackagePrivateIntFieldA.class, desiredDiff);
     }
 
@@ -369,8 +375,8 @@ public class DiffClassesTest {
     @Test
     public void publicAndPrivateFields() {
         final String desiredDiff = "@@\n" +
-                "- private int a;\n" +
-                "+ public int a;\n";
+                "- private int a\n" +
+                "+ public int a\n";
         testInequality(HasPrivateIntFieldA.class, HasPublicIntFieldA.class, desiredDiff);
     }
 
@@ -380,8 +386,8 @@ public class DiffClassesTest {
     @Test
     public void packagePrivateAndPrivateFields() {
         final String desiredDiff = "@@\n" +
-                "- int a;\n" +
-                "+ private int a;\n";
+                "- int a\n" +
+                "+ private int a\n";
         testInequality(HasPackagePrivateIntFieldA.class, HasPrivateIntFieldA.class, desiredDiff);
     }
 
@@ -423,8 +429,8 @@ public class DiffClassesTest {
     @Test
     public void privateMethodsWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- private void foo();\n" +
-                "+ private void bar();\n";
+                "- private void foo()\n" +
+                "+ private void bar()\n";
         testInequality(HasPrivateRunnerFoo.class, HasPrivateRunnerBar.class, desiredDiff);
     }
 
@@ -434,8 +440,8 @@ public class DiffClassesTest {
     @Test
     public void packagePrivateMethodsWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- void foo();\n" +
-                "+ void bar();\n";
+                "- void foo()\n" +
+                "+ void bar()\n";
         testInequality(HasPackagePrivateRunnerFoo.class, HasPackagePrivateRunnerBar.class, desiredDiff);
     }
 
@@ -445,8 +451,8 @@ public class DiffClassesTest {
     @Test
     public void publicMethodsWithDifferentNames() {
         final String desiredDiff = "@@\n" +
-                "- public void foo();\n" +
-                "+ public void bar();\n";
+                "- public void foo()\n" +
+                "+ public void bar()\n";
         testInequality(HasPublicRunnerFoo.class, HasPublicRunnerBar.class, desiredDiff);
     }
 
@@ -456,8 +462,8 @@ public class DiffClassesTest {
     @Test
     public void publicAndPackagePrivateMethods() {
         final String desiredDiff = "@@\n" +
-                "- public void foo();\n" +
-                "+ void foo();\n";
+                "- public void foo()\n" +
+                "+ void foo()\n";
         testInequality(HasPublicRunnerFoo.class, HasPackagePrivateRunnerFoo.class, desiredDiff);
     }
 
@@ -467,8 +473,8 @@ public class DiffClassesTest {
     @Test
     public void publicAndPrivateMethods() {
         final String desiredDiff = "@@\n" +
-                "- public void foo();\n" +
-                "+ private void foo();\n";
+                "- public void foo()\n" +
+                "+ private void foo()\n";
         testInequality(HasPublicRunnerFoo.class, HasPrivateRunnerFoo.class, desiredDiff);
     }
 
@@ -478,8 +484,8 @@ public class DiffClassesTest {
     @Test
     public void packagePrivateAndPrivateMethods() {
         final String desiredDiff = "@@\n" +
-                "- void foo();\n" +
-                "+ private void foo();\n";
+                "- void foo()\n" +
+                "+ private void foo()\n";
         testInequality(HasPackagePrivateRunnerFoo.class, HasPrivateRunnerFoo.class, desiredDiff);
     }
 
@@ -489,8 +495,8 @@ public class DiffClassesTest {
     @Test
     public void publicMethodsWithDifferentReturnTypes() {
         final String desiredDiff = "@@\n" +
-                "- public int foo();\n" +
-                "+ public char foo();\n";
+                "- public int foo()\n" +
+                "+ public char foo()\n";
         testInequality(HasPublicIntSupplierFoo.class, HasPublicCharSupplierFoo.class, desiredDiff);
     }
 
@@ -500,8 +506,8 @@ public class DiffClassesTest {
     @Test
     public void publicMethodsWithDifferentNumbersOfArguments() {
         final String desiredDiff = "@@\n" +
-                "- public void foo(int, int);\n" +
-                "+ public void foo(int);\n";
+                "- public void foo(int, int)\n" +
+                "+ public void foo(int)\n";
         testInequality(HasPublicIntIntBiConsumerFoo.class, HasPublicIntConsumerFoo.class, desiredDiff);
     }
 
@@ -511,8 +517,8 @@ public class DiffClassesTest {
     @Test
     public void publicMethodsWithDifferentTypesOfArguments() {
         final String desiredDiff = "@@\n" +
-                "- public void foo(int, int);\n" +
-                "+ public void foo(int, char);\n";
+                "- public void foo(int, char)\n" +
+                "+ public void foo(int, int)\n";
         testInequality(HasPublicIntIntBiConsumerFoo.class, HasPublicIntCharBiConsumerFoo.class, desiredDiff);
     }
 
@@ -522,8 +528,8 @@ public class DiffClassesTest {
     @Test
     public void publicAndPublicStaticMethod() {
         final String desiredDiff = "@@\n" +
-                "- public void foo(int);\n" +
-                "+ public static void foo(int);\n";
+                "- public void foo(int)\n" +
+                "+ public static void foo(int)\n";
         testInequality(HasPublicIntConsumerFoo.class, HasPublicStaticIntConsumerFoo.class, desiredDiff);
     }
 
@@ -536,11 +542,13 @@ public class DiffClassesTest {
     }
 
     /**
-     * Tests that extended and overloaded methods are equal to each other.
+     * Tests that extended and overloaded methods are not equal to each other.
      */
     @Test
     public void overloadingAndExtending() {
-        testEquality(OverloadingAndExtendingA.class, OverloadingAndExtendingB.class);
+        final String desiredDiff = "@@\n" +
+                "+ public void foo(int, int)\n";
+        testInequality(OverloadingAndExtendingA.class, OverloadingAndExtendingB.class, desiredDiff);
     }
 
     /**
@@ -571,8 +579,8 @@ public class DiffClassesTest {
     public void genericFieldTypeAndInt() {
         final String desiredDiff = "@@\n" +
                 "- <T>\n" +
-                "- public int a;" +
-                "+ public T a;";
+                "- public int a\n" +
+                "+ public T a\n";
         testInequality(HasPublicTFieldA.class, HasPublicIntFieldA.class, desiredDiff);
     }
 
@@ -583,9 +591,9 @@ public class DiffClassesTest {
     public void differentGenericTypeNames() {
         final String desiredDiff = "@@\n" +
                 "- <T>\n" +
-                "- public T a;\n" +
+                "- public T a\n" +
                 "+ <K>\n" +
-                "+ public K a;\n";
+                "+ public K a\n";
         testInequality(HasPublicTFieldA.class, HasPublicKFieldA.class, desiredDiff);
     }
 
@@ -595,8 +603,8 @@ public class DiffClassesTest {
     @Test
     public void genericAndNonGenericArgumentTypes() {
         final String desiredDiff = "@@\n" +
-                "- public <T> void foo(T);\n" +
-                "+ public <T> void foo(int);\n";
+                "- public <T> void foo(T)\n" +
+                "+ public <T> void foo(int)\n";
         testInequality(HasPublicGenericTConsumerFoo.class, HasPublicGenericIntConsumerFoo.class, desiredDiff);
     }
 
@@ -606,8 +614,8 @@ public class DiffClassesTest {
     @Test
     public void genericMethodsWithDifferentParameters() {
         final String desiredDiff = "@@\n" +
-                "- public <T> void foo(T);\n" +
-                "+ public <K> void foo(K);\n";
+                "- public <T> void foo(T)\n" +
+                "+ public <K> void foo(K)\n";
         testInequality(HasPublicGenericTConsumerFoo.class, HasPublicGenericKConsumerFoo.class, desiredDiff);
     }
 
@@ -655,8 +663,8 @@ public class DiffClassesTest {
     @Test
     public void genericSelection() {
         final String desiredDiff = "@@\n" +
-                "- public void foo(Set<T>);\n" +
-                "+ public void foo(Set<K>);\n";
+                "- public void foo(Set<T>)\n" +
+                "+ public void foo(Set<K>)\n";
         testInequality(GenericTKHasPublicSetTConsumer.class, GenericTKHasPublicSetKConsumer.class, desiredDiff);
     }
 

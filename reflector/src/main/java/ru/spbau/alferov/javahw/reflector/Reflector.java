@@ -54,7 +54,8 @@ public class Reflector {
         @Override
         protected void finishClassDeclaration() {
             super.finishClassDeclaration();
-            flushLine();
+            if (nextLine.toString().length() != 0)
+                flushLine();
         }
 
         @Override
@@ -100,6 +101,17 @@ public class Reflector {
     public static boolean diffClasses(Class<?> a, Class<?> b, PrintStream out) {
         List<String> aStruct = new DiffClassesVisitor().visitClass(a, false);
         List<String> bStruct = new DiffClassesVisitor().visitClass(b, false);
+
+        System.out.println("diffClasses:");
+        System.out.println("first:");
+        for (String s : aStruct) {
+            System.out.println(s);
+        }
+        System.out.println("second:");
+        for (String s : bStruct) {
+            System.out.println(s);
+        }
+
         Collections.sort(aStruct);
         Collections.sort(bStruct);
 
