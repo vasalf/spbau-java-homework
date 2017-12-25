@@ -29,7 +29,7 @@ public class ClassVisitor {
          * Constructs the abstract class with the shouldVisitSubclasses variable. It is inherited by all child
          * elements.
          */
-        ReflectionElement(boolean shouldVisitSubclasses) {
+        public ReflectionElement(boolean shouldVisitSubclasses) {
             visitSubclasses = shouldVisitSubclasses;
         }
 
@@ -55,7 +55,7 @@ public class ClassVisitor {
         /**
          * Construct a new acceptor.
          */
-        ClassElement(Class<?> toStore, boolean shouldVisitSubclasses) {
+        public ClassElement(Class<?> toStore, boolean shouldVisitSubclasses) {
             super(shouldVisitSubclasses);
             stored = toStore;
         }
@@ -105,7 +105,7 @@ public class ClassVisitor {
         /**
          * Construct a new acceptor.
          */
-        FieldElement(Field toStore, boolean shouldVisitSubclasses) {
+        public FieldElement(Field toStore, boolean shouldVisitSubclasses) {
             super(shouldVisitSubclasses);
             stored = toStore;
         }
@@ -200,7 +200,7 @@ public class ClassVisitor {
         /**
          * Flush the current line. Should be used by visitors to push back the nextLine.
          */
-        public void flushLine() {
+        protected void flushLine() {
             lines.add(nextLine.toString());
             nextLine = new StringBuilder();
         }
@@ -350,7 +350,7 @@ public class ClassVisitor {
          * Writes the method return type. Appends it to the nextLine. May be overridden, though.
          */
         protected void appendMethodReturnType(Method forMethod) {
-            writeClassName(forMethod.getReturnType());
+            nextLine.append(getTypeName(forMethod.getGenericReturnType()));
             nextLine.append(' ');
         }
 
@@ -404,6 +404,21 @@ public class ClassVisitor {
         }
 
         /**
+         * Adds some value to the field in the end. Does nothing by default. May be overridden, though.
+         */
+        protected void appendFieldValue(Field toField) { }
+
+        /**
+         * Adds some realization to the method in the end. Does nothing by default. May be overridden, though.
+         */
+        protected void appendMethodRealization(Method toMethod) { }
+
+        /**
+         * Adds some realization to the constructor in the end. Does nothing by default. May be overridden, though.
+         */
+        protected void appendConstructorRealization(Constructor<?> toConstructor) { }
+
+        /**
          * Indicates the end of some class declaration. Does nothing by default.
          * Overridden in case it is required to write a curly bracket or increment the indentation level.
          */
@@ -445,6 +460,7 @@ public class ClassVisitor {
             appendFieldModifiers(fieldElement.getStored());
             appendFieldType(fieldElement.getStored());
             appendFieldName(fieldElement.getStored());
+            appendFieldValue(fieldElement.getStored());
             finishFieldDeclaration();
         }
 
@@ -455,6 +471,7 @@ public class ClassVisitor {
             appendConstructorModifiers(constructorElement.getStored());
             appendConstructor(constructorElement.getStored());
             appendParameters(constructorElement.getStored().getGenericParameterTypes());
+            appendConstructorRealization(constructorElement.getStored());
             finishConstructorDeclaration();
         }
 
@@ -470,6 +487,7 @@ public class ClassVisitor {
             appendMethodReturnType(methodElement.getStored());
             appendMethodName(methodElement.getStored());
             appendParameters(methodElement.getStored().getGenericParameterTypes());
+            appendMethodRealization(methodElement.getStored());
             finishMethodDeclaration();
         }
 

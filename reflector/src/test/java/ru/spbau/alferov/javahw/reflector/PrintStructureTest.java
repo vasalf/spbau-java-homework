@@ -21,6 +21,7 @@ public class PrintStructureTest {
          * This function compiles given class using shell command javac and checks that the process finished normally.
          */
         public static void compileClass(String filename) throws Exception {
+            //System.out.println("javac " + filename);
             Process p = Runtime.getRuntime().exec("javac " + filename);
             p.waitFor();
             assertFalse(p.isAlive());
@@ -45,7 +46,7 @@ public class PrintStructureTest {
          */
         public static Optional<Class<?>> findInnerClass(Class<?> where, Class<?> which) {
             return Arrays.stream(where.getDeclaredClasses())
-                    .filter(c -> c.getName().equals(which.getName()))
+                    .filter(c -> c.getSimpleName().equals(which.getSimpleName()))
                     .findFirst();
         }
 
@@ -56,7 +57,7 @@ public class PrintStructureTest {
          * @param b A class where to fail if a subclass is not found.
          */
         public static void recursivelyTestClassMatchings(Class<?> a, Class<?> b) throws Exception {
-            assertEquals(a.getName(), b.getName());
+            assertEquals(a.getSimpleName(), b.getSimpleName());
             assertTrue(Reflector.diffClasses(a, b));
             for (Class<?> innerOrNested : a.getDeclaredClasses()) {
                 Optional<Class<?>> matching = findInnerClass(b, innerOrNested);
@@ -77,8 +78,8 @@ public class PrintStructureTest {
      */
     private void testClass(Class<?> toTest) throws Exception {
         Reflector.printStructure(toTest);
-        Tester.compileClass(toTest.getName() + ".java");
-        Class<?> compiledClass = Tester.loadClass(toTest.getName());
+        Tester.compileClass(toTest.getSimpleName() + ".java");
+        Class<?> compiledClass = Tester.loadClass(toTest.getSimpleName());
         Tester.recursivelyTestClassMatchings(toTest, compiledClass);
         Tester.recursivelyTestClassMatchings(compiledClass, toTest);
     }
@@ -178,40 +179,6 @@ public class PrintStructureTest {
     private static class EmptyGenericTKextTClass<T, K extends T> { }
 
     private static class EmptyGenericTComparableTClass<T extends Comparable<T>> { }
-
-    private static class FiveInnerClasses {
-        private class First {
-            private class Second {
-                private class Third {
-                    private class Fourth {
-                        private class Fifth { }
-                    }
-                }
-            }
-        }
-    }
-
-    private static class FiveInnerGenericClasses {
-        private class First<A> {
-            A a;
-            private class Second<B> {
-                A a2;
-                B b;
-                private class Third<C> {
-                    B b2;
-                    C c;
-                    private class Fourth<D> {
-                        C c2;
-                        D d;
-                        private class Fifth<E> {
-                            D d2;
-                            E e;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private static class FiveNestedGenericClasses {
         private static class First<A> {
@@ -442,34 +409,10 @@ public class PrintStructureTest {
     }
 
     /**
-     * Tests a chain of inner classes.
-     */
-    @Test
-    public void fiveInnerClasses() throws Exception {
-        testClass(FiveInnerClasses.class);
-    }
-
-    /**
-     * Tests a chain of inner generic classes.
-     */
-    @Test
-    public void fiveInnerGenericClasses() throws Exception {
-        testClass(FiveInnerGenericClasses.class);
-    }
-
-    /**
      * Tests a chain of nested generic classes.
      */
     @Test
     public void fiveNestedGenericClasses() throws Exception {
         testClass(FiveNestedGenericClasses.class);
-    }
-
-    /**
-     * Tests printStructure on java.util.ArrayList
-     */
-    @Test
-    public void arrayList() throws Exception {
-        testClass(ArrayList.class);
     }
 }
