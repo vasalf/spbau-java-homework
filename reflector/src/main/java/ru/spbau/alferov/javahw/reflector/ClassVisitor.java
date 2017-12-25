@@ -1,8 +1,9 @@
 package ru.spbau.alferov.javahw.reflector;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *  A set of abstract classes and realizations for walking through declarations in some class. The purpose is to walk
@@ -187,6 +188,24 @@ public class ClassVisitor {
      */
     public abstract class Visitor {
         /**
+         * A StringBuilder containing the next line.
+         */
+        protected StringBuilder nextLine = new StringBuilder();
+
+        /**
+         * All of the lines stored.
+         */
+        private List<String> lines = new ArrayList<>();
+
+        /**
+         * Flush the current line. Should be used by visitors to push back the nextLine.
+         */
+        public void flushLine() {
+            lines.add(nextLine.toString());
+            nextLine = new StringBuilder();
+        }
+
+        /**
          * Visit some reflection element. Just calling the accept method in element.
          */
         public void visit(ReflectionElement element) {
@@ -194,29 +213,251 @@ public class ClassVisitor {
         }
 
         /**
-         * This function might be overridden in case the visitor has some special implementation details for getting out
-         * of visited functions (e.g. the visitor is indentation-sensitive). Does nothing by default.
+         * This function might is overridden in case the visitor has some special implementation details for getting out
+         * of visited elements (e.g. the visitor is indentation-sensitive). Also it is overridden for flushing the lines
+         * when necessary.
          */
-        public void goOut() { }
+        public abstract void goOut();
+
+        /**
+         * Write the class modifiers. Appends the modifiers to the nextLine. May be overridden, though.
+         */
+        protected void appendClassModifiers(Class<?> forClass) {
+            nextLine.append(Modifier.toString(forClass.getModifiers()));
+            nextLine.append(' ');
+        }
+
+        /**
+         * Write the field modifiers. Appends the modifiers to the nextLine. May be overridden, though.
+         */
+        protected void appendFieldModifiers(Field forField) {
+            nextLine.append(Modifier.toString(forField.getModifiers()));
+            nextLine.append(' ');
+        }
+
+        /**
+         * Write the constructor modifiers. Appends the modifiers to the nextLine. May be overridden, though.
+         */
+        protected void appendConstructorModifiers(Constructor<?> forConstructor) {
+            nextLine.append(Modifier.toString(forConstructor.getModifiers()));
+            nextLine.append(' ');
+        }
+
+        /**
+         * Write the method modifiers. Appends the modifiers to the nextLine. May be overridden, though.
+         */
+        protected void appendMethodModifiers(Method forMethod) {
+            nextLine.append(Modifier.toString(forMethod.getModifiers()));
+            nextLine.append(' ');
+        }
+
+        /**
+         * Write the class keyword. Appends the "class " string to the nextLine. May be overridden, though.
+         */
+        protected void appendClassKeyword() {
+            nextLine.append("class ");
+        }
+
+        /**
+         * Get the type name (with generics). Used by different functions.
+         */
+        protected String getTypeName(Type t) {
+            return t.getTypeName();
+        }
+
+        /**
+         * Write an array of type parameters. Appends the type parameters enclosed in &lt; and &gt; with all their
+         * dependencies to some StringBuilder. There is no need in overriding it, really.
+         */
+        protected void appendTypeParameters(TypeVariable[] typeVariables, StringBuilder where) {
+            if (typeVariables.length != 0) {
+                List<String> params = new ArrayList<>();
+                for (TypeVariable<?> tv : typeVariables) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(tv.getName());
+                    Type[] bounds = tv.getBounds();
+                    List<String> boundStrings = new ArrayList<>();
+                    for (Type t : bounds) {
+                        if (!t.equals(Object.class)) {
+                            boundStrings.add(getTypeName(t));
+                        }
+                    }
+                    if (boundStrings.size() > 0) {
+                        sb.append(" extends ");
+                        sb.append(
+                                boundStrings
+                                .stream()
+                                .collect(Collectors.joining(" & "))
+                        );
+                    }
+                    params.add(sb.toString());
+                }
+                where.append(
+                        params
+                        .stream()
+                        .collect(Collectors.joining(", ", "<", ">"))
+                );
+            }
+        }
+
+        /**
+         * Write an array of type parameters. Appends the type parameters enclosed in &lt; and &gt; with all their
+         * dependencies to the nextLine. There is no need in overriding it, really.
+         */
+        protected void appendTypeParameters(TypeVariable[] typeVariables) {
+            appendTypeParameters(typeVariables, nextLine);
+        }
+
+        /**
+         * Writes some Class name to some StringBuilder. There is no need in overriding it, really.
+         */
+        protected void writeClassName(Class<?> clazz, StringBuilder sb) {
+            sb.append(clazz.getSimpleName());
+            appendTypeParameters(clazz.getTypeParameters(), sb);
+        }
+
+        /**
+         * Writes some Class name to the nextLine. There is no need in overriding it, really.
+         */
+        protected void writeClassName(Class<?> clazz) {
+            writeClassName(clazz, nextLine);
+        }
+
+        /**
+         * Writes the field type. Appends it to the nextLine. May be overridden, though.
+         */
+        protected void appendFieldType(Field forField) {
+            writeClassName(forField.getType());
+        }
+
+        /**
+         * Writes the method return type. Appends it to the nextLine. May be overridden, though.
+         */
+        protected void appendMethodReturnType(Method forMethod) {
+            writeClassName(forMethod.getReturnType());
+        }
+
+        /**
+         * Writes the field name. Appends it to the nextLine. May be overridden, though.
+         */
+        protected void appendFieldName(Field field) {
+            nextLine.append(field.getName());
+        }
+
+        /**
+         * Being called for every constructor, this function appends the class name to the nextLine. May be overridden,
+         * though.
+         */
+        protected void appendConstructor(Constructor<?> forConstructor) {
+            nextLine.append(forConstructor.getDeclaringClass().getSimpleName());
+        }
+
+        /**
+         * Writes the method name. Appends it to the nextLine. May be overridden, though.
+         */
+        protected void appendMethodName(Method forMethod) {
+            nextLine.append(forMethod.getName());
+        }
+
+        /**
+         * Appends name of some parameter of a method/constructor to some StringBuilder. Generates a new name according
+         * to the index by default. May be overridden, though.
+         */
+        protected void appendParameterName(int index, StringBuilder sb) {
+            sb.append(" arg");
+            sb.append(index);
+        }
+
+        /**
+         * Appends the constructor/method parameters to the nextLine. May be overridden, though.
+         */
+        protected void appendParameters(Class<?>[] parameters) {
+            List<String> params = new ArrayList<>();
+            for (int i = 0; i < parameters.length; i++) {
+                StringBuilder sb = new StringBuilder();
+                writeClassName(parameters[i], sb);
+                appendParameterName(i, sb);
+                params.add(sb.toString());
+            }
+            nextLine.append(
+                    params
+                    .stream()
+                    .collect(Collectors.joining(", ", "(", ")"))
+            );
+        }
+
+        /**
+         * Indicates the end of some class declaration. Does nothing by default.
+         * Overridden in case it is required to write a curly bracket or increment the indentation level.
+         */
+        protected void finishClassDeclaration() { }
+
+        /**
+         * Indicates the end of some field declaration. Does nothing by default.
+         * May be overridden, though.
+         */
+        protected void finishFieldDeclaration() { }
+
+        /**
+         * Indicates the end of some constructor declaration. Does nothing by default.
+         * May be overridden, though.
+         */
+        protected void finishConstructorDeclaration() { }
+
+        /**
+         * Indicates the end of some method declaration. Does nothing by default.
+         * May be overridden, thouh.
+         */
+        protected void finishMethodDeclaration() { }
 
         /**
          * Visit the class.
          */
-        public abstract void visitClass(ClassElement classElement);
+        public void visitClass(ClassElement classElement) {
+            appendClassModifiers(classElement.getStored());
+            appendClassKeyword();
+            appendTypeParameters(classElement.getStored().getTypeParameters());
+            finishClassDeclaration();
+        }
 
         /**
          * Visit the field.
          */
-        public abstract void visitField(FieldElement fieldElement);
+        public void visitField(FieldElement fieldElement) {
+            appendFieldModifiers(fieldElement.getStored());
+            appendFieldType(fieldElement.getStored());
+            appendFieldName(fieldElement.getStored());
+            finishFieldDeclaration();
+        }
 
         /**
          * Visit the constructor.
          */
-        public abstract void visitConstructor(ConstructorElement constructorElement);
+        public void visitConstructor(ConstructorElement constructorElement) {
+            appendConstructorModifiers(constructorElement.getStored());
+            appendConstructor(constructorElement.getStored());
+            appendParameters(constructorElement.getStored().getParameterTypes());
+            finishConstructorDeclaration();
+        }
 
         /**
          * Visit the method.
          */
-        public abstract void visitMethod(MethodElement methodElement);
+        public void visitMethod(MethodElement methodElement) {
+            appendMethodModifiers(methodElement.getStored());
+            appendTypeParameters(methodElement.getStored().getTypeParameters());
+            appendMethodReturnType(methodElement.getStored());
+            appendMethodName(methodElement.getStored());
+            appendParameters(methodElement.getStored().getParameterTypes());
+            finishMethodDeclaration();
+        }
+
+        /**
+         * Visit some class and return all of the lines. The main method of the class :)
+         */
+        public List<String> visitClass(Class<?> whichClass, boolean shouldVisitSubclasses) {
+            visit(new ClassElement(whichClass, shouldVisitSubclasses));
+            return lines;
+        }
     }
 }
