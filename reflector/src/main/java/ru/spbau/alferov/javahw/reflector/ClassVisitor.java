@@ -18,7 +18,7 @@ public class ClassVisitor {
      * All of the architecture is designed in way that it's nearly not necessary for programmer to call visit() methods,
      * so accept() methods try to walk as far as possible.
      */
-    public abstract class ReflectionElement {
+    public static abstract class ReflectionElement {
         /**
          * The visitors may or may not want to visit subclasses. So the subclasses will or will not be visited according
          * to the shouldVisitSubclasses value.
@@ -42,7 +42,7 @@ public class ClassVisitor {
     /**
      * An acceptor for Class&lt;?&gt; elements.
      */
-    public class ClassElement extends ReflectionElement {
+    public static class ClassElement extends ReflectionElement {
         private Class<?> stored;
 
         /**
@@ -92,7 +92,7 @@ public class ClassVisitor {
     /**
      * An acceptor for fields.
      */
-    public class FieldElement extends ReflectionElement {
+    public static class FieldElement extends ReflectionElement {
         private Field stored;
 
         /**
@@ -123,7 +123,7 @@ public class ClassVisitor {
     /**
      * An acceptor for Constructor&lt;?&gt; elements.
      */
-    public class ConstructorElement extends ReflectionElement {
+    public static class ConstructorElement extends ReflectionElement {
         private Constructor<?> stored;
 
         /**
@@ -154,7 +154,7 @@ public class ClassVisitor {
     /**
      * An acceptor for methods.
      */
-    public class MethodElement extends ReflectionElement {
+    public static class MethodElement extends ReflectionElement {
         private Method stored;
 
         /**
@@ -186,7 +186,7 @@ public class ClassVisitor {
      * The base class for visitors. Contains a StringBuilder for next line and an ArrayList for storing existent lines.
      * Designed in such way that realization should be minimal.
      */
-    public abstract class Visitor {
+    public static abstract class Visitor {
         /**
          * A StringBuilder containing the next line.
          */
@@ -213,42 +213,50 @@ public class ClassVisitor {
         }
 
         /**
-         * This function might is overridden in case the visitor has some special implementation details for getting out
+         * This function might be overridden in case the visitor has some special implementation details for getting out
          * of visited elements (e.g. the visitor is indentation-sensitive). Also it is overridden for flushing the lines
          * when necessary.
          */
-        public abstract void goOut();
+        public void goOut() { }
 
         /**
          * Write the class modifiers. Appends the modifiers to the nextLine. May be overridden, though.
          */
         protected void appendClassModifiers(Class<?> forClass) {
-            nextLine.append(Modifier.toString(forClass.getModifiers()));
-            nextLine.append(' ');
+            String modifiers = Modifier.toString(forClass.getModifiers());
+            nextLine.append(modifiers);
+            if (modifiers.length() > 0)
+                nextLine.append(' ');
         }
 
         /**
          * Write the field modifiers. Appends the modifiers to the nextLine. May be overridden, though.
          */
         protected void appendFieldModifiers(Field forField) {
-            nextLine.append(Modifier.toString(forField.getModifiers()));
-            nextLine.append(' ');
+            String modifiers = Modifier.toString(forField.getModifiers());
+            nextLine.append(modifiers);
+            if (modifiers.length() > 0)
+                nextLine.append(' ');
         }
 
         /**
          * Write the constructor modifiers. Appends the modifiers to the nextLine. May be overridden, though.
          */
         protected void appendConstructorModifiers(Constructor<?> forConstructor) {
-            nextLine.append(Modifier.toString(forConstructor.getModifiers()));
-            nextLine.append(' ');
+            String modifiers = Modifier.toString(forConstructor.getModifiers());
+            nextLine.append(modifiers);
+            if (modifiers.length() > 0)
+                nextLine.append(' ');
         }
 
         /**
          * Write the method modifiers. Appends the modifiers to the nextLine. May be overridden, though.
          */
         protected void appendMethodModifiers(Method forMethod) {
-            nextLine.append(Modifier.toString(forMethod.getModifiers()));
-            nextLine.append(' ');
+            String modifiers = Modifier.toString(forMethod.getModifiers());
+            nextLine.append(modifiers);
+            if (modifiers.length() > 0)
+                nextLine.append(' ');
         }
 
         /**
@@ -259,7 +267,7 @@ public class ClassVisitor {
         }
 
         /**
-         * Get the type name (with generics). Used by different functions.
+         * Get the type name (with generics). Used by different functions. There is no need in overriding it, really.
          */
         protected String getTypeName(Type t) {
             return t.getTypeName();
@@ -327,7 +335,15 @@ public class ClassVisitor {
          * Writes the field type. Appends it to the nextLine. May be overridden, though.
          */
         protected void appendFieldType(Field forField) {
-            writeClassName(forField.getType());
+            nextLine.append(getTypeName(forField.getGenericType()));
+            nextLine.append(' ');
+        }
+
+        /**
+         * Writes the class name. Appends it to the nextLine. May be overridden, though.
+         */
+        protected void appendClassName(Class<?> forClass) {
+            nextLine.append(forClass.getSimpleName());
         }
 
         /**
@@ -335,6 +351,7 @@ public class ClassVisitor {
          */
         protected void appendMethodReturnType(Method forMethod) {
             writeClassName(forMethod.getReturnType());
+            nextLine.append(' ');
         }
 
         /**
@@ -371,11 +388,11 @@ public class ClassVisitor {
         /**
          * Appends the constructor/method parameters to the nextLine. May be overridden, though.
          */
-        protected void appendParameters(Class<?>[] parameters) {
+        protected void appendParameters(Type[] parameters) {
             List<String> params = new ArrayList<>();
             for (int i = 0; i < parameters.length; i++) {
                 StringBuilder sb = new StringBuilder();
-                writeClassName(parameters[i], sb);
+                sb.append(getTypeName(parameters[i]));
                 appendParameterName(i, sb);
                 params.add(sb.toString());
             }
@@ -416,6 +433,7 @@ public class ClassVisitor {
         public void visitClass(ClassElement classElement) {
             appendClassModifiers(classElement.getStored());
             appendClassKeyword();
+            appendClassName(classElement.getStored());
             appendTypeParameters(classElement.getStored().getTypeParameters());
             finishClassDeclaration();
         }
@@ -436,7 +454,7 @@ public class ClassVisitor {
         public void visitConstructor(ConstructorElement constructorElement) {
             appendConstructorModifiers(constructorElement.getStored());
             appendConstructor(constructorElement.getStored());
-            appendParameters(constructorElement.getStored().getParameterTypes());
+            appendParameters(constructorElement.getStored().getGenericParameterTypes());
             finishConstructorDeclaration();
         }
 
@@ -446,9 +464,12 @@ public class ClassVisitor {
         public void visitMethod(MethodElement methodElement) {
             appendMethodModifiers(methodElement.getStored());
             appendTypeParameters(methodElement.getStored().getTypeParameters());
+            if (methodElement.getStored().getTypeParameters().length > 0) {
+                nextLine.append(' ');
+            }
             appendMethodReturnType(methodElement.getStored());
             appendMethodName(methodElement.getStored());
-            appendParameters(methodElement.getStored().getParameterTypes());
+            appendParameters(methodElement.getStored().getGenericParameterTypes());
             finishMethodDeclaration();
         }
 

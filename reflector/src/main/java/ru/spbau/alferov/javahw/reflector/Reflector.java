@@ -1,6 +1,8 @@
 package ru.spbau.alferov.javahw.reflector;
 
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.util.List;
 
 /**
  * Class for some reflection-based operations.
@@ -26,8 +28,50 @@ public class Reflector {
         throw new UnsupportedOperationException("Unimplemented");
     }
 
-    private static class ClassDifferentiator {
+    /**
+     * The visitor for DiffClasses function. Writes the methods in just the same
+     * manner as described in diffClasses description.
+     */
+    private static class DiffClassesVisitor extends ClassVisitor.Visitor {
+        @Override
+        protected void appendClassModifiers(Class<?> forClass) { }
 
+        @Override
+        protected void appendClassKeyword() { }
+
+
+
+        @Override
+        protected void appendConstructor(Constructor<?> forConstructor) {
+            nextLine.append("Constructor");
+        }
+
+        @Override
+        protected void appendParameterName(int index, StringBuilder sb) { }
+
+        @Override
+        protected void finishClassDeclaration() {
+            super.finishClassDeclaration();
+            flushLine();
+        }
+
+        @Override
+        protected void finishConstructorDeclaration() {
+            super.finishConstructorDeclaration();
+            flushLine();
+        }
+
+        @Override
+        protected void finishFieldDeclaration() {
+            super.finishFieldDeclaration();
+            flushLine();
+        }
+
+        @Override
+        protected void finishMethodDeclaration() {
+            super.finishMethodDeclaration();
+            flushLine();
+        }
     }
 
     /**
@@ -52,7 +96,12 @@ public class Reflector {
      * @return true if classes are similar.
      */
     public static boolean diffClasses(Class<?> a, Class<?> b, PrintStream out) {
-        throw new UnsupportedOperationException("Unimplemented");
+        List<String> desc = new DiffClassesVisitor().visitClass(a, true);
+        desc.addAll(new DiffClassesVisitor().visitClass(b, true));
+        for (String s : desc) {
+            out.println(s);
+        }
+        return false;
     }
 
     /**
