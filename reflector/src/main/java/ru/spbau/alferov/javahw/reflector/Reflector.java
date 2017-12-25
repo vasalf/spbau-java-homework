@@ -2,6 +2,7 @@ package ru.spbau.alferov.javahw.reflector;
 
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +40,8 @@ public class Reflector {
         @Override
         protected void appendClassKeyword() { }
 
-
+        @Override
+        protected void appendClassName(Class<?> forClass) { }
 
         @Override
         protected void appendConstructor(Constructor<?> forConstructor) {
@@ -96,12 +98,36 @@ public class Reflector {
      * @return true if classes are similar.
      */
     public static boolean diffClasses(Class<?> a, Class<?> b, PrintStream out) {
-        List<String> desc = new DiffClassesVisitor().visitClass(a, true);
-        desc.addAll(new DiffClassesVisitor().visitClass(b, true));
-        for (String s : desc) {
-            out.println(s);
+        List<String> aStruct = new DiffClassesVisitor().visitClass(a, false);
+        List<String> bStruct = new DiffClassesVisitor().visitClass(b, false);
+        Collections.sort(aStruct);
+        Collections.sort(bStruct);
+
+        boolean areDifferent = false;
+        int i = 0, j = 0;
+        while (i < aStruct.size() && j < bStruct.size()) {
+            if (j == bStruct.size() || aStruct.get(i).compareTo(bStruct.get(j)) < 0) {
+                // aStruct.get(i) is less
+                if (!areDifferent) {
+                    out.println("@@");
+                }
+                areDifferent = true;
+                out.println("+ " + aStruct.get(i));
+                i++;
+            } else if (i == aStruct.size() || aStruct.get(i).compareTo(bStruct.get(j)) > 0) {
+                // bStruct.get(j) is less
+                if (!areDifferent) {
+                    out.println("@@");
+                }
+                areDifferent = true;
+                out.println("- " + bStruct.get(j));
+                j++;
+            } else {
+                // aStruct.get(i) == bStruct.get(j)
+                i++; j++;
+            }
         }
-        return false;
+        return !areDifferent;
     }
 
     /**
