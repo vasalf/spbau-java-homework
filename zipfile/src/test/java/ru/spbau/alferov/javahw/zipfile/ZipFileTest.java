@@ -8,11 +8,6 @@ import java.util.Scanner;
 import static org.junit.Assert.*;
 
 public class ZipFileTest {
-    private static void cleanupTestDir() {
-        File f = new File("./build/classes/test/sample_test");
-        assert !f.exists() || f.delete();
-    }
-
     private static String readString(File f) throws FileNotFoundException {
         InputStream is = new FileInputStream(f);
         Scanner s = new Scanner(is);

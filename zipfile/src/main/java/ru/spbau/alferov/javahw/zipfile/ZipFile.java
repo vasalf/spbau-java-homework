@@ -30,13 +30,13 @@ public class ZipFile {
     }
 
     public static void extract(String path, String re) {
-        File f = new File(path);
+        @NotNull File f = new File(path);
         if (!f.exists())
             return;
         ZipFile.findZipFiles(f, re);
     }
 
-    private static void findZipFiles(File path, String re) {
+    private static void findZipFiles(@NotNull File path, String re) {
         if (path.isDirectory()) {
             @NotNull File[] files = path.listFiles();
             for (File f : files) {
@@ -51,8 +51,8 @@ public class ZipFile {
 
     private static final int BUF_SIZE = 1024 * 1024;
 
-    private static void extractFromZipFile(File path, String re) {
-        try(ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(path))) {
+    private static void extractFromZipFile(@NotNull File path, String re) {
+        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(path))) {
             for (@Nullable ZipEntry ze = zipInputStream.getNextEntry(); ze != null; ze = zipInputStream.getNextEntry()) {
                 File file = new File(ze.getName());
                 if (!ze.isDirectory() && file.getName().matches(re)) {
