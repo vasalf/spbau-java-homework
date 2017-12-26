@@ -3,7 +3,11 @@ package ru.spbau.alferov.javahw.maybe;
 import java.io.*;
 import java.util.ArrayList;
 
-
+/**
+ * The application reads some literals from the file given as first
+ * command line parameter. If a literal is an integer, then its square
+ * is written to the second file. Otherwise, "null" is written.
+ */
 public class Main {
     /**
      * This function returns an ArrayList of integers that could be
@@ -12,19 +16,23 @@ public class Main {
      * cell of the returned value.
      */
     private static ArrayList<Maybe<Integer>> readFromFile(String filename) throws IOException {
-        BufferedReader isr = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
-        ArrayList<Maybe<Integer>> res  = new ArrayList<>();
-        String line = isr.readLine();
-        while (line != null) {
-            try {
-                Integer read = Integer.parseInt(line);
-                res.add(Maybe.just(read));
-            } catch (NumberFormatException e) {
-                res.add(Maybe.nothing());
+        try (
+                FileReader fileReader = new FileReader(filename);
+                BufferedReader isr = new BufferedReader(fileReader)
+        ) {
+            ArrayList<Maybe<Integer>> res = new ArrayList<>();
+            String line = isr.readLine();
+            while (line != null) {
+                try {
+                    Integer read = Integer.parseInt(line);
+                    res.add(Maybe.just(read));
+                } catch (NumberFormatException e) {
+                    res.add(Maybe.nothing());
+                }
+                line = isr.readLine();
             }
-            line = isr.readLine();
+            return res;
         }
-        return res;
     }
 
     /**
@@ -36,13 +44,14 @@ public class Main {
      * it, so this should be added to the throws() list.
      */
     private static void writeSquaresToFile(String filename, ArrayList<Maybe<Integer>> list) throws IOException, MaybeException {
-        PrintStream ps = new PrintStream(filename);
-        for (Maybe<Integer> mb : list) {
-            Maybe<Long> out = mb.map(x -> (long)x * (long)x);
-            if (out.isPresent()) {
-                ps.println(out.get());
-            } else {
-                ps.println("null");
+        try (PrintStream ps = new PrintStream(filename)) {
+            for (Maybe<Integer> mb : list) {
+                Maybe<Long> out = mb.map(x -> (long) x * (long) x);
+                if (out.isPresent()) {
+                    ps.println(out.get());
+                } else {
+                    ps.println("null");
+                }
             }
         }
     }

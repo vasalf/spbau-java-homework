@@ -26,17 +26,11 @@ public class MaybeTest {
      * In particular, it creates a non-stored value and get() throws
      * MaybeException.
      */
-    @Test
+    @Test(expected = MaybeException.class)
     public void nothing() throws Exception {
         Maybe<Double> md = Maybe.nothing();
         assertFalse(md.isPresent());
-        try {
-            md.get();
-        } catch (MaybeException e) {
-            //ok
-            return;
-        }
-        assertTrue("Did not catch the MaybeException", false);
+        md.get();
     }
 
     /**

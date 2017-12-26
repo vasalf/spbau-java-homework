@@ -34,11 +34,22 @@ public class Maybe<T> {
     }
 
     /**
-     * Constructs a new empty value.
+     * This static field stores the nothing maybe -- to make it not created
+     * every time it is needed.
+     */
+    @NotNull
+    @SuppressWarnings("unchecked")
+    private static final Maybe nothingValue = new Maybe(null);
+
+    /**
+     * Returns an empty value. Performs an unchecked cast in its body so
+     * there is no need in doing it
      */
     @NotNull
     public static <T> Maybe<T> nothing() {
-        return new Maybe<>(null);
+        @SuppressWarnings("unchecked")
+        Maybe<T> ret = (Maybe<T>)nothingValue;
+        return ret;
     }
 
     /**
