@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="injector_main" target="1.8" />
+      <module name="injector_test" target="1.8" />
       <module name="matrices_main" target="1.8" />
       <module name="matrices_test" target="1.8" />
       <module name="reflector_main" target="1.8" />
