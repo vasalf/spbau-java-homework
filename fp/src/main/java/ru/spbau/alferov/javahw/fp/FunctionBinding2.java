@@ -6,7 +6,7 @@ package ru.spbau.alferov.javahw.fp;
  * @param <Y> Type of the second argument.
  * @param <R> Type of the result.
  */
-public class FunctionBinding2<X, Y, R> extends Function1<X, R> {
+public class FunctionBinding2<X, Y, R> implements Function1<X, R> {
     /**
      * Binded argument.
      */

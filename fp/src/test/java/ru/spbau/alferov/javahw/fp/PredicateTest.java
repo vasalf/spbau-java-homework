@@ -91,8 +91,8 @@ public class PredicateTest {
      */
     @Test
     public void ALWAYS_TRUE() {
-        Predicate<String> a = Predicate.ALWAYS_TRUE();
-        Predicate<Integer> b = Predicate.ALWAYS_TRUE();
+        Predicate<String> a = Predicates.alwaysTrue();
+        Predicate<Integer> b = Predicates.alwaysTrue();
 
         assertTrue(a.apply("a"));
         assertTrue(a.apply(""));
@@ -121,29 +121,29 @@ public class PredicateTest {
      */
     @Test
     public void ALWAYS_FALSE() {
-        Predicate<String> a = Predicate.ALWAYS_FALSE();
-        Predicate<Integer> b = Predicate.ALWAYS_FALSE();
+        Predicate<String> a = Predicates.alwaysFalse();
+        Predicate<Integer> b = Predicates.alwaysFalse();
 
         assertFalse(a.apply("a"));
         assertFalse(a.apply(""));
         assertFalse(b.apply(0));
         assertFalse(b.apply(1));
 
-        Predicate<String> non_empty = new Predicate<String>() {
+        Predicate<String> nonEmpty = new Predicate<String>() {
             @Override
             public Boolean apply(String arg) {
                 return arg.length() != 0;
             }
         };
-        Predicate<Integer> not_zero = new Predicate<Integer>() {
+        Predicate<Integer> notZero = new Predicate<Integer>() {
             @Override
             public Boolean apply(Integer arg) {
                 return arg != 0;
             }
         };
 
-        assertTrue(a.or(non_empty).apply("abc"));
-        assertFalse(b.and(not_zero).apply(123));
+        assertTrue(a.or(nonEmpty).apply("abc"));
+        assertFalse(b.and(notZero).apply(123));
     }
 
 }

@@ -7,7 +7,7 @@ package ru.spbau.alferov.javahw.fp;
  * @param <R> Return type of inner function.
  * @param <S> Return type of composition.
  */
-public class Function2Composition<X, Y, R, S> extends Function2<X, Y, S> {
+public class Function2Composition<X, Y, R, S> implements Function2<X, Y, S> {
     /**
      * Inner function of the composition.
      */

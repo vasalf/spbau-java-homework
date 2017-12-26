@@ -3,7 +3,7 @@ package ru.spbau.alferov.javahw.fp;
 /**
  * A helper class for composition of predicates.
  */
-public class Predicate1Composition<X> extends Predicate<X> {
+public class Predicate1Composition<X> implements Predicate<X> {
     /**
      * The inner predicate of the composition.
      */
