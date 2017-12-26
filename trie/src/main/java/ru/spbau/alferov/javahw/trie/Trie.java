@@ -3,6 +3,8 @@ package ru.spbau.alferov.javahw.trie;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,49 +15,128 @@ import org.jetbrains.annotations.Nullable;
  * the number of Strings in the Trie which have exactly this prefix.
  *
  * Each String is stored only once.
- *
- * All vertices are stored in an ArrayLists because we don't know the
- * capacity before creating the Trie.
- *
- * There is no Vertex class due to performance reasons (classes are
- * slow).
  */
 public class Trie implements Serializable {
     /**
-     * ArrayList of sets of children of vertices.
-     * Namely, v = next.get(u).get(c) if and only if there is an edge
-     * u->v by the letter c.
+     * A class for nodes of the trie, required by Java code conventions
+     * to make Java code even slower.
      */
-    private ArrayList<HashMap<Character, Integer>> next;
+    private static class Node implements Serializable {
+        /**
+         * A hashmap of ancestor of node.
+         * Namely, v = next.get(c) if and only if there is an edge u->v
+         * by the letter c.
+         */
+        @NotNull
+        private Map<Character, Node> next = new HashMap<>();
+
+        /**
+         * Is node terminal?
+         */
+        private boolean terminal = false;
+
+        /**
+         * Number of terminal ancestors of the node.
+         */
+        private int numAncestors = 0;
+
+        /**
+         * Increase number of ancestors by some value.
+         * This function is called when a new string is
+         * added or an old string is removed.
+         */
+        public void increaseNumAncestors(int a) {
+            numAncestors += a;
+        }
+
+
+        /**
+         * Get the number of terminal ancestors of the node.
+         */
+        public int getNumAncestors() {
+            return numAncestors;
+        }
+
+        /**
+         * Set the terminal flag.
+         */
+        public void setTerminal(boolean isTerminal) {
+            terminal = isTerminal;
+        }
+
+        /**
+         * Get the next node by character on edge or return
+         * Optional.empty if there is no edge.
+         */
+        @NotNull
+        public Optional<Node> getNextNode(char c) {
+            if (next.containsKey(c)) {
+                return Optional.of(next.get(c));
+            } else {
+                return Optional.empty();
+            }
+        }
+
+        /**
+         * Get the next node by character on edge or create a
+         * new one, if there is no edge.
+         * The new node will be created as new Node()
+         */
+        @NotNull
+        public Node getOrCreateNextNode(char c) {
+            if (!next.containsKey(c)) {
+                next.put(c, new Node());
+            }
+            return next.get(c);
+        }
+
+        /**
+         * Getter for terminal.
+         */
+        public boolean isTerminal() {
+            return terminal;
+        }
+
+        /**
+         * Serialize an object into outputstream.
+         */
+        public void serialize(ObjectOutputStream objectOutputStream) throws IOException {
+            objectOutputStream.writeObject(terminal);
+            objectOutputStream.writeObject(numAncestors);
+            objectOutputStream.writeObject(next.size());
+            for (Map.Entry<Character, Node> entry : next.entrySet()) {
+                objectOutputStream.writeObject(entry.getKey());
+                entry.getValue().serialize(objectOutputStream);
+            }
+        }
+
+        /**
+         * Deserialize object from inputstream.
+         */
+        public void deserialize(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+            this.terminal = (Boolean)objectInputStream.readObject();
+            this.numAncestors = (Integer)objectInputStream.readObject();
+            int size = (Integer)objectInputStream.readObject();
+            next = new HashMap<>();
+            for (int i = 0; i < size; i++) {
+                char c = (Character)objectInputStream.readObject();
+                Node node = new Node();
+                node.deserialize(objectInputStream);
+                next.put(c, node);
+            }
+        }
+    }
 
     /**
-     * The v-th element of this ArrayList is True if and only if v is
-     * a terminal vertex.
+     * The trie root.
      */
-    private ArrayList<Boolean> isTerminal;
-
-    /**
-     * The v-th element of this ArrayList represents number of
-     * terminal vertices in the Trie which are the ancestors of
-     * vertex v.
-     */
-    private ArrayList<Integer> numAncestors;
+    @NotNull
+    private Node root = new Node();
 
     /**
      * The number of terminal vertices in the Trie.
      */
     private int trieSize = 0;
-
-    /**
-     * Adds a new vertex to the Trie.
-     * @return index of a new vertex.
-     */
-    private int addNewVertex() {
-        next.add(new HashMap<>());
-        isTerminal.add(false);
-        numAncestors.add(0);
-        return next.size() - 1;
-    }
 
     /**
      * Adds some value to numAncestors through some path from the
@@ -64,14 +145,12 @@ public class Trie implements Serializable {
      * @param value value to be added to numAncestors.
      */
     private void addOnPath(@NotNull String path, int value) {
-        int currentVertex = 0;
-        numAncestors.set(0, numAncestors.get(0) + value);
+        @NotNull Node v = root;
         for (int i = 0; i < path.length(); i++) {
-            char c = path.charAt(i);
-            // We guarantee that given path exists in the Trie.
-            currentVertex = next.get(currentVertex).get(c);
-            numAncestors.set(currentVertex, numAncestors.get(currentVertex) + value);
+            v.increaseNumAncestors(value);
+            v = v.getOrCreateNextNode(path.charAt(i));
         }
+        v.increaseNumAncestors(value);
     }
 
     /**
@@ -82,25 +161,16 @@ public class Trie implements Serializable {
      * description).
      */
     @Nullable
-    private Integer walkThroughPath(@NotNull String path) {
-        int currentVertex = 0;
+    private Node walkThroughPath(@NotNull String path) {
+        @NotNull Node currentVertex = root;
         for (int i = 0; i < path.length(); i++) {
-            char c = path.charAt(i);
-            if (!next.get(currentVertex).containsKey(c))
+            Optional<Node> next = currentVertex.getNextNode(path.charAt(i));
+            if (next.isPresent())
+                currentVertex = next.get();
+            else
                 return null;
-            currentVertex = next.get(currentVertex).get(c);
         }
         return currentVertex;
-    }
-
-    /**
-     * Constructs an empty Trie.
-     */
-    public Trie() {
-        next = new ArrayList<>();
-        isTerminal = new ArrayList<>();
-        numAncestors = new ArrayList<>();
-        addNewVertex();
     }
 
     /**
@@ -109,21 +179,16 @@ public class Trie implements Serializable {
      * @return true if element already exists, false otherwise.
      */
     public boolean add(@NotNull String element) {
-        int currentVertex = 0;
+        Node currentVertex = root;
         for (int i = 0; i < element.length(); i++) {
-            char c = element.charAt(i);
-            if (!next.get(currentVertex).containsKey(c)) {
-                int v = addNewVertex();
-                next.get(currentVertex).put(c, v);
-            }
-            currentVertex = next.get(currentVertex).get(c);
+            currentVertex = currentVertex.getOrCreateNextNode(element.charAt(i));
         }
-        boolean ret = isTerminal.get(currentVertex);
+        boolean ret = currentVertex.isTerminal();
         if (!ret) {
             trieSize++;
             addOnPath(element, 1);
         }
-        isTerminal.set(currentVertex, true);
+        currentVertex.setTerminal(true);
         return ret;
     }
 
@@ -131,11 +196,11 @@ public class Trie implements Serializable {
      * Checks if Trie contains the element.
      */
     public boolean contains(@NotNull String element) {
-        Integer currentVertex = walkThroughPath(element);
+        Node currentVertex = walkThroughPath(element);
         if (currentVertex == null) {
             return false;
         } else {
-            return isTerminal.get(currentVertex);
+            return currentVertex.isTerminal();
         }
     }
 
@@ -146,22 +211,22 @@ public class Trie implements Serializable {
      * removal, false otherwise.
      */
     public boolean remove(@NotNull String element) {
-        Integer currentVertex = walkThroughPath(element);
+        Node currentVertex = walkThroughPath(element);
         if (currentVertex == null)
             return false;
-        boolean ret = isTerminal.get(currentVertex);
+        boolean ret = currentVertex.isTerminal();
         if (ret) {
             addOnPath(element, -1);
             trieSize--;
         }
-        isTerminal.set(currentVertex, false);
+        currentVertex.setTerminal(false);
         return ret;
     }
 
     /**
      * Returns number of unique Strings in the Trie.
      */
-    int size() {
+    public int size() {
         return trieSize;
     }
 
@@ -170,11 +235,11 @@ public class Trie implements Serializable {
      * prefix.
      */
     int howManyStartsWithPrefix(@NotNull String prefix) {
-        Integer currentVertex = walkThroughPath(prefix);
+        Node currentVertex = walkThroughPath(prefix);
         if (currentVertex == null) {
             return 0;
         } else {
-            return numAncestors.get(currentVertex);
+            return currentVertex.getNumAncestors();
         }
     }
 
@@ -183,7 +248,8 @@ public class Trie implements Serializable {
      */
     public void serialize(OutputStream out) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
-        objectOutputStream.writeObject(this);
+        objectOutputStream.writeObject(this.trieSize);
+        root.serialize(objectOutputStream);
     }
 
     /**
@@ -191,10 +257,7 @@ public class Trie implements Serializable {
      */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream = new ObjectInputStream(in);
-        Trie tr = (Trie)objectInputStream.readObject();
-        this.trieSize = tr.trieSize;
-        this.next = tr.next;
-        this.isTerminal = tr.isTerminal;
-        this.numAncestors = tr.numAncestors;
+        this.trieSize = (Integer)objectInputStream.readObject();
+        root.deserialize(objectInputStream);
     }
 }

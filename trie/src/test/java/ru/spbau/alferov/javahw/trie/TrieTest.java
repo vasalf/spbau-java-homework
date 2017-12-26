@@ -14,53 +14,53 @@ public class TrieTest {
      */
     @Test
     public void construct() {
-        Trie tr = new Trie();
+        new Trie();
     }
 
     /**
      * Checks behaviour of the returned value of add.
      */
     @Test
-    public void add() {
+    public void addReturnValue() {
         Trie tr = new Trie();
-        assertEquals(false, tr.add("abcd"));
-        assertEquals(false, tr.add("efgh"));
-        assertEquals(false, tr.add(""));
-        assertEquals(false, tr.add("abgh"));
-        assertEquals(true, tr.add("abcd"));
+        assertFalse(tr.add("abcd"));
+        assertFalse(tr.add("efgh"));
+        assertFalse(tr.add(""));
+        assertFalse(tr.add("abgh"));
+        assertTrue(tr.add("abcd"));
     }
 
     /**
      * Checks the contains() function.
      */
     @Test
-    public void contains() {
+    public void containsBehaviour() {
         Trie tr = new Trie();
         tr.add("abcd");
         tr.add("abcd");
         tr.add("efghi");
-        assertEquals(true, tr.contains("abcd"));
-        assertEquals(true, tr.contains("efghi"));
-        assertEquals(false, tr.contains(""));
-        assertEquals(false, tr.contains("abcde"));
+        assertTrue(tr.contains("abcd"));
+        assertTrue(tr.contains("efghi"));
+        assertFalse(tr.contains(""));
+        assertFalse(tr.contains("abcde"));
     }
 
     /**
      * Checks the remove() function behaviour and returned value.
      */
     @Test
-    public void remove() {
+    public void removeReturnValue() {
         Trie tr = new Trie();
         tr.add("abcd");
         tr.add("abcd");
         tr.add("efgh");
-        assertEquals(true, tr.contains("abcd"));
-        assertEquals(true, tr.contains("efgh"));
-        assertEquals(true, tr.remove("abcd"));
-        assertEquals(false, tr.contains("abcd"));
-        assertEquals(true, tr.contains("efgh"));
-        assertEquals(false, tr.add("abcd"));
-        assertEquals(true, tr.contains("abcd"));
+        assertTrue(tr.contains("abcd"));
+        assertTrue(tr.contains("efgh"));
+        assertTrue(tr.remove("abcd"));
+        assertFalse(tr.contains("abcd"));
+        assertTrue(tr.contains("efgh"));
+        assertFalse(tr.add("abcd"));
+        assertTrue(tr.contains("abcd"));
     }
 
     /**
@@ -70,17 +70,17 @@ public class TrieTest {
     @Test
     public void removeNonExistent() {
         Trie tr = new Trie();
-        assertEquals(false, tr.remove("abcd"));
+        assertFalse(tr.remove("abcd"));
         tr.add("abcd");
-        assertEquals(true, tr.remove("abcd"));
-        assertEquals(false, tr.remove("abcd"));
+        assertTrue(tr.remove("abcd"));
+        assertFalse(tr.remove("abcd"));
     }
 
     /**
      * Checks the size() function behaviour.
      */
     @Test
-    public void size() {
+    public void sizeChanges() {
         Trie tr = new Trie();
         assertEquals(0, tr.size());
         tr.add("abcd");
@@ -129,7 +129,7 @@ public class TrieTest {
      * on equality.
      */
     @Test
-    public void serialize() throws IOException, ClassNotFoundException {
+    public void serializeAndDeserialize() throws IOException, ClassNotFoundException {
         String put[] = {"abcd", "efgh", "ijkl", "abdf", "a", ""};
         Trie tr = new Trie();
         for (String s : put) {
