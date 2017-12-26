@@ -18,7 +18,7 @@ public interface Function2<X, Y, R> {
      * Denote the basic (this) function by f. Than this returns the function g(f(x, y)).
      */
     default <S> Function2<X, Y, S> compose(Function1<R, S> g) {
-        return new Function2Composition<>(this, g);
+        return (arg1, arg2) -> g.apply(apply(arg1, arg2));
     }
 
     /**
@@ -26,7 +26,7 @@ public interface Function2<X, Y, R> {
      * @return Function f(arg, x);
      */
     default Function1<Y, R> bind1(X arg) {
-        return new FunctionBinding1<>(this, arg);
+        return x -> apply(arg, x);
     }
 
     /**
@@ -34,13 +34,13 @@ public interface Function2<X, Y, R> {
      * @return Function f(x, arg);
      */
     default Function1<X, R> bind2(Y arg) {
-        return new FunctionBinding2<>(this, arg);
+        return x -> apply(x, arg);
     }
 
     /**
      * <s>For some strange reason in the specification this is the same as bind2.</s>
      */
     default Function1<X, R> curry(Y arg) {
-        return new FunctionBinding2<>(this, arg);
+        return x -> apply(x, arg);
     }
 }

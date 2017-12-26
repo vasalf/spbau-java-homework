@@ -35,19 +35,20 @@ public class Collections {
      * Takes elements of some Iterable object a while they match the predicate p.
      */
     static <T> List<T> takeWhile(Predicate<? super T> p, Iterable<T> a) {
-        return filter(new Predicate1Composition<>(p, new Predicate<Boolean>() {
+        return filter(new Predicate<T>() {
             boolean wasFalse = false;
             @Override
-            public Boolean apply(Boolean arg) {
+            public Boolean apply(T arg) {
                 if (wasFalse) {
                     return false;
                 }
-                if (!arg) {
+                boolean pVal = p.apply(arg);
+                if (!pVal) {
                     wasFalse = true;
                 }
-                return arg;
+                return pVal;
             }
-        }), a);
+        }, a);
     }
 
     /**

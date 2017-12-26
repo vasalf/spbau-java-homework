@@ -10,12 +10,7 @@ public class Function2Test {
      */
     @Test
     public void sum() {
-        Function2<Integer, Integer, Integer> f = new Function2<Integer, Integer, Integer>() {
-            @Override
-            public Integer apply(Integer arg1, Integer arg2) {
-                return arg1 + arg2;
-            }
-        };
+        Function2<Integer, Integer, Integer> f = (arg1, arg2) -> arg1 + arg2;
 
         assertEquals(42, (int)f.apply(0, 42));
         assertEquals(179, (int)f.apply(100, 79));
@@ -26,18 +21,8 @@ public class Function2Test {
      */
     @Test
     public void compose() {
-        Function2<String, Integer, Integer> f = new Function2<String, Integer, Integer>() {
-            @Override
-            public Integer apply(String arg1, Integer arg2) {
-                return arg1.length() * arg2;
-            }
-        };
-        Function1<Integer, String> toStr = new Function1<Integer, String>() {
-            @Override
-            public String apply(Integer arg) {
-                return arg.toString();
-            }
-        };
+        Function2<String, Integer, Integer> f = (arg1, arg2) -> arg1.length() * arg2;
+        Function1<Integer, String> toStr = arg -> arg.toString();
         Function2<String, Integer, String> h = f.compose(toStr);
 
         assertEquals("20", h.apply("abcd", 5));
@@ -48,12 +33,7 @@ public class Function2Test {
      */
     @Test
     public void bind() {
-        Function2<String, Integer, Integer> f = new Function2<String, Integer, Integer>() {
-            @Override
-            public Integer apply(String arg1, Integer arg2) {
-                return arg1.length() * arg2;
-            }
-        };
+        Function2<String, Integer, Integer> f = (arg1, arg2) -> arg1.length() * arg2;
         Function1<String, Integer> doubledLength = f.bind2(2);
         Function1<String, Integer> doubledLength2 = f.curry(2);
         Function1<Integer, Integer> mul4 = f.bind1("qwer");
