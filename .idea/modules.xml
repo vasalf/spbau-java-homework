@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator_main.iml" group="calculator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator_test.iml" group="calculator" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" group="linkedhashmap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" group="linkedhashmap" />
