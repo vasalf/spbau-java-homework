@@ -38,7 +38,7 @@ public class Tree<T extends Comparable<T>> {
          * Basic constructor.
          * Sets left and right children to null.
          */
-        Node(@NotNull T store) {
+        public Node(@NotNull T store) {
             value = store;
         }
     }
