@@ -18,13 +18,12 @@ public final class SecondPartTasks {
                     System.out.println(path);
                     Stream<String> ans;
                     try {
-                        ans = Files.lines(Paths.get(path))
+                        return Files.lines(Paths.get(path))
                                   .filter(s -> s.contains(sequence));
                     } catch (IOException e) {
                         System.out.println("oups");
                         return Stream.empty();
                     }
-                    return ans;
                 }
         ).collect(Collectors.toList());
     }
@@ -50,7 +49,7 @@ public final class SecondPartTasks {
         final int tries = 10000;
         return Stream.generate(() -> new Point(r.nextDouble() - 0.5, r.nextDouble() - 0.5))
                 .limit(tries)
-                .mapToInt(point -> point.radiusVectorLength() < 0.25 ? 1 : 0)
+                .mapToInt(point -> point.radiusVectorLength() < 0.5 ? 1 : 0)
                 .average().orElse(0);
     }
 
@@ -74,19 +73,10 @@ public final class SecondPartTasks {
                 .stream()
                 .flatMap(x -> x.entrySet().stream())
                 .collect(
-                        HashMap::new,
-                        (h, entry) -> {
-                            if (!h.containsKey(entry.getKey()))
-                                h.put(entry.getKey(), 0);
-                            h.put(entry.getKey(), h.get(entry.getKey()) + entry.getValue());
-                        },
-                        (h, t) -> {
-                            for (Map.Entry<String, Integer> entry : t.entrySet()) {
-                                if (!h.containsKey(entry.getKey()))
-                                    h.put(entry.getKey(), 0);
-                                h.put(entry.getKey(), h.get(entry.getKey()) + entry.getValue());
-                            }
-                        }
+                        Collectors.groupingBy(
+                                Map.Entry::getKey,
+                                Collectors.summingInt(Map.Entry::getValue)
+                        )
                 );
     }
 }

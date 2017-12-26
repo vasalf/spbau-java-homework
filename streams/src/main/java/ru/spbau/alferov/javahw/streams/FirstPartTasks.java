@@ -1,6 +1,7 @@
 package ru.spbau.alferov.javahw.streams;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,14 +31,7 @@ public final class FirstPartTasks {
 
     // Список альбомов, в которых есть хотя бы один трек с рейтингом более 95, отсортированный по названию
     public static List<Album> sortedFavorites(Stream<Album> s) {
-        return s.filter(album -> {
-                    for (Track track : album.getTracks()) {
-                        if (track.getRating() > 95) {
-                            return true;
-                        }
-                    }
-                    return false;
-                })
+        return s.filter(album -> album.getTracks().stream().anyMatch(track -> track.getRating() > 95))
                 .sorted(Comparator.comparing(Album::getName))
                 .collect(Collectors.toList());
     }
@@ -57,17 +51,14 @@ public final class FirstPartTasks {
 
     // Число повторяющихся альбомов в потоке
     public static long countAlbumDuplicates(Stream<Album> albums) {
-        return albums.filter(new Predicate<Album>() {
-
-            private Set<Album> metAlbums = new HashSet<>();
-
-            @Override
-            public boolean test(Album album) {
-                boolean result = metAlbums.contains(album);
-                metAlbums.add(album);
-                return result;
-            }
-        }).count();
+        return albums.collect(
+                Collectors.groupingBy(
+                        Function.identity(),
+                        Collectors.counting()
+                )
+        ).entrySet().stream()
+                .filter(entry -> entry.getValue() > 1)
+                .count();
     }
 
     // Альбом, в котором максимум рейтинга минимален

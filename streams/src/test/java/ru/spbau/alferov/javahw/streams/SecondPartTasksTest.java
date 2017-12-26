@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.abs;
 import static org.junit.Assert.*;
 import static ru.spbau.alferov.javahw.streams.SecondPartTasks.*;
 
@@ -15,7 +17,6 @@ public class SecondPartTasksTest {
 
     @Test
     public void testFindQuotes() {
-        ClassLoader classLoader = getClass().getClassLoader();
         File quote1 = new File("src/test/resources/quotes1.txt");
         File quote2 = new File("src/test/resources/quotes2.txt");
         assertEquals(ImmutableList.of(
@@ -32,6 +33,8 @@ public class SecondPartTasksTest {
         double x = piDividedBy4();
         assertTrue(x >= 0);
         assertTrue(x <= 1);
+        System.out.println(x);
+        assertTrue(abs(x - PI / 4) < 0.01);
     }
 
     @Test
