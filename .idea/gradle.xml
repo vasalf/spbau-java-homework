@@ -12,6 +12,24 @@
           </set>
         </option>
       </GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/injector" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/injector" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/reflector" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/reflector" />
+          </set>
+        </option>
+      </GradleProjectSettings>
     </option>
   </component>
 </project>
