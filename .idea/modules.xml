@@ -8,6 +8,15 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_main.iml" group="hashtable" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_test.iml" group="hashtable" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector.iml" filepath="$PROJECT_DIR$/.idea/modules/injector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/injector_main.iml" group="injector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/injector_test.iml" group="injector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_main.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_main.iml" group="matrices" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_test.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_test.iml" group="matrices" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_main.iml" group="reflector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_test.iml" group="reflector" />
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
     </modules>
   </component>
