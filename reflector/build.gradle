@@ -1,0 +1,27 @@
+group 'javahw'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task mkdirForTests {
+    description = 'Create directory for tests.'
+    doLast {
+        new File("${projectDir}/tests-temp").mkdirs()
+    }
+}
+
+test {
+    dependsOn.add(mkdirForTests)
+    workingDir = "${projectDir}/tests-temp"
+}
