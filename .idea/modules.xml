@@ -5,15 +5,15 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator_main.iml" group="calculator" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/calculator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/calculator_test.iml" group="calculator" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" group="linkedhashmap" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" group="linkedhashmap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_main.iml" group="hashtable" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hashtable_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hashtable_test.iml" group="hashtable" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector.iml" filepath="$PROJECT_DIR$/.idea/modules/injector.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/injector_main.iml" group="injector" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/injector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/injector_test.iml" group="injector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" group="linkedhashmap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" group="linkedhashmap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_main.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_main.iml" group="matrices" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_test.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_test.iml" group="matrices" />
