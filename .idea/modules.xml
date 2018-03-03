@@ -30,6 +30,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree.iml" filepath="$PROJECT_DIR$/.idea/modules/tree.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_main.iml" group="tree" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_test.iml" group="tree" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile_main.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile_main.iml" group="zipfile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zipfile_test.iml" filepath="$PROJECT_DIR$/.idea/modules/zipfile_test.iml" group="zipfile" />
     </modules>
   </component>
 </project>
