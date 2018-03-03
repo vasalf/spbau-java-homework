@@ -1,6 +1,16 @@
 language: java
 env:
   - TEST_DIR=calculator
+  - TEST_DIR=hashtable
+  - TEST_DIR=injector
+  - TEST_DIR=linkedhashmap
+  - TEST_DIR=matrices
+  - TEST_DIR=maybe
+  - TEST_DIR=reflector
+  - TEST_DIR=streams
+  - TEST_DIR=tree
+  - TEST_DIR=trie
+  - TEST_DIR=zipfile
 before_install: cd $TEST_DIR
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -9,3 +19,7 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+notifications:
+  email:
+    on_success: never
+    on_failure: always
