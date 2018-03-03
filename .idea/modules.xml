@@ -14,7 +14,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_main.iml" group="linkedhashmap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/linkedhashmap_test.iml" group="linkedhashmap" />
-      <module fileurl="file://$PROJECT_DIR$/matrices/src/main/main.iml" filepath="$PROJECT_DIR$/matrices/src/main/main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_main.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_main.iml" group="matrices" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/matrices_test.iml" filepath="$PROJECT_DIR$/.idea/modules/matrices_test.iml" group="matrices" />
@@ -25,7 +24,12 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_main.iml" group="reflector" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_test.iml" group="reflector" />
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/matrices/src/test/test.iml" filepath="$PROJECT_DIR$/matrices/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/streams.iml" filepath="$PROJECT_DIR$/.idea/modules/streams.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/streams_main.iml" filepath="$PROJECT_DIR$/.idea/modules/streams_main.iml" group="streams" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/streams_test.iml" filepath="$PROJECT_DIR$/.idea/modules/streams_test.iml" group="streams" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree.iml" filepath="$PROJECT_DIR$/.idea/modules/tree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_main.iml" group="tree" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tree_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tree_test.iml" group="tree" />
     </modules>
   </component>
 </project>

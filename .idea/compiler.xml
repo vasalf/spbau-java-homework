@@ -4,6 +4,20 @@
     <bytecodeTargetLevel>
       <module name="maybe_main" target="1.8" />
       <module name="maybe_test" target="1.8" />
+      <module name="tree_main" target="1.8" />
+      <module name="tree_test" target="1.8" />
+      <module name="calculator_main" target="1.8" />
+      <module name="calculator_test" target="1.8" />
+      <module name="linkedhashmap_main" target="1.8" />
+      <module name="linkedhashmap_test" target="1.8" />
+      <module name="injector_main" target="1.8" />
+      <module name="injector_test" target="1.8" />
+      <module name="matrices_main" target="1.8" />
+      <module name="matrices_test" target="1.8" />
+      <module name="streams_main" target="1.8" />
+      <module name="streams_test" target="1.8" />
+      <module name="reflector_main" target="1.8" />
+      <module name="reflector_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
