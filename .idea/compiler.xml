@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="maybe_main" target="1.8" />
+      <module name="maybe_test" target="1.8" />
       <module name="tree_main" target="1.8" />
       <module name="tree_test" target="1.8" />
       <module name="calculator_main" target="1.8" />
