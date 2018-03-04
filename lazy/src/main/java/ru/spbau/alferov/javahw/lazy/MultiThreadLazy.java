@@ -36,13 +36,14 @@ public class MultiThreadLazy<T> implements Lazy<T> {
      * value can still be null (in case the supplier returned null).
      */
     @Nullable
-    private T value = null;
+    private volatile T value = null;
 
     /**
      * This is the basic constructor.
      * @param supplier Supplier which generates the value to be taken.
      */
     MultiThreadLazy(@NotNull Supplier<T> supplier) {
+        tSupplier = supplier;
     }
 
     /**
@@ -51,6 +52,15 @@ public class MultiThreadLazy<T> implements Lazy<T> {
     @Override
     @Nullable
     public T get() {
-        return null;
+        // Double-check locking idiom
+        if (tSupplier != null) {
+            synchronized (this) {
+                if (tSupplier != null) {
+                    value = tSupplier.get();
+                    tSupplier = null;
+                }
+            }
+        }
+        return value;
     }
 }

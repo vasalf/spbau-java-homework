@@ -3,6 +3,7 @@ env:
   - TEST_DIR=calculator
   - TEST_DIR=hashtable
   - TEST_DIR=injector
+  - TEST_DIR=lazy
   - TEST_DIR=linkedhashmap
   - TEST_DIR=matrices
   - TEST_DIR=maybe

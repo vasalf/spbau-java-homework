@@ -43,6 +43,7 @@ public class SingleThreadLazy<T> implements Lazy<T> {
      * @param supplier Supplier which generates the value to be taken.
      */
     SingleThreadLazy(@NotNull Supplier<T> supplier) {
+        tSupplier = supplier;
     }
 
     /**
@@ -51,6 +52,10 @@ public class SingleThreadLazy<T> implements Lazy<T> {
     @Override
     @Nullable
     public T get() {
-        return null;
+        if (tSupplier != null) {
+            value = tSupplier.get();
+            tSupplier = null;
+        }
+        return value;
     }
 }
