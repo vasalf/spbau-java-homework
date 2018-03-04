@@ -3,55 +3,29 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="createEmptyContentRootDirectories" value="true" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/trie" />
-        <option name="gradleHome" value="/usr/bin/gradle" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/trie" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="createEmptyContentRootDirectories" value="true" />
-        <option name="distributionType" value="WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/zipfile" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/zipfile" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="createEmptyContentRootDirectories" value="true" />
-        <option name="distributionType" value="WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/maybe" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/maybe" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/tree" />
-        <option name="gradleJvm" value="1.8" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/tree" />
-            </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/calculator" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/calculator" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/injector" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/injector" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/lazy" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/lazy" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -65,11 +39,13 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/injector" />
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="distributionType" value="WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/maybe" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/injector" />
+            <option value="$PROJECT_DIR$/maybe" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -91,6 +67,39 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/streams" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/tree" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/tree" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/trie" />
+        <option name="gradleHome" value="/usr/bin/gradle" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/trie" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="createEmptyContentRootDirectories" value="true" />
+        <option name="distributionType" value="WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/zipfile" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/zipfile" />
           </set>
         </option>
       </GradleProjectSettings>
