@@ -42,7 +42,7 @@ public class MultiThreadLazy<T> implements Lazy<T> {
      * This is the basic constructor.
      * @param supplier Supplier which generates the value to be taken.
      */
-    MultiThreadLazy(@NotNull Supplier<T> supplier) {
+    public MultiThreadLazy(@NotNull Supplier<T> supplier) {
         tSupplier = supplier;
     }
 

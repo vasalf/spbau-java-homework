@@ -84,14 +84,11 @@ public class MultiThreadLazyTest {
          * @param r The Runnable for the thread.
          */
         TestingThread(Runnable r) {
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        r.run();
-                    } catch (AssertionError exc) {
-                        e = exc;
-                    }
+            thread = new Thread(() -> {
+                try {
+                    r.run();
+                } catch (AssertionError exc) {
+                    e = exc;
                 }
             });
         }
@@ -111,7 +108,7 @@ public class MultiThreadLazyTest {
             if (e != null)
                 throw e;
         }
-    };
+    }
 
     /**
      * <p>Stress-tests the MultiThreadLazy object with two threads and a hundred {@link Lazy#get()} requests from each.</p>

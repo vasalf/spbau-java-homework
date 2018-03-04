@@ -105,7 +105,7 @@ public class BasicLazyFunctionalityTest {
      *                        for information).
      */
     public static void lazyCallsOnceTest(Function<Supplier<Integer>, Lazy<Integer>> lazyTransformer) {
-        CallCounter<Integer> callCounter = new CallCounter<Integer>(179);
+        CallCounter<Integer> callCounter = new CallCounter<>(179);
         Lazy<Integer> lazy = lazyTransformer.apply(callCounter);
         assertEquals(new Integer(179), lazy.get());
         assertEquals(new Integer(179), lazy.get());
@@ -119,7 +119,7 @@ public class BasicLazyFunctionalityTest {
      *                        for information).
      */
     public static void lazyNullCallsOnceTest(Function<Supplier<Integer>, Lazy<Integer>> lazyTransformer) {
-        CallCounter<Integer> callCounter = new CallCounter<Integer>(null);
+        CallCounter<Integer> callCounter = new CallCounter<>(null);
         Lazy<Integer> lazy = lazyTransformer.apply(callCounter);
         assertEquals(null, lazy.get());
         assertEquals(null, lazy.get());
@@ -133,7 +133,7 @@ public class BasicLazyFunctionalityTest {
      *                        for information).
      */
     public static void lazyNotCallingSupplierTest(Function<Supplier<Integer>, Lazy<Integer>> lazyTransformer) {
-        CallCounter<Integer> callCounter = new CallCounter<Integer>(179);
+        CallCounter<Integer> callCounter = new CallCounter<>(179);
         Lazy<Integer> lazy = lazyTransformer.apply(callCounter);
         assertEquals(0, callCounter.getCallCount());
     }

@@ -42,7 +42,7 @@ public class SingleThreadLazy<T> implements Lazy<T> {
      * This is the basic constructor.
      * @param supplier Supplier which generates the value to be taken.
      */
-    SingleThreadLazy(@NotNull Supplier<T> supplier) {
+    public SingleThreadLazy(@NotNull Supplier<T> supplier) {
         tSupplier = supplier;
     }
 
