@@ -51,5 +51,8 @@ fabric.properties
 # .gradle dirs
 **/.gradle/*
 
+# build dirs
+**/build/*
+
 # My
 reflector/tests-temp/*
