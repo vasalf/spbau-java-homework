@@ -2,26 +2,28 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="calculator_main" target="1.8" />
+      <module name="calculator_test" target="1.8" />
+      <module name="injector_main" target="1.8" />
+      <module name="injector_test" target="1.8" />
+      <module name="linkedhashmap_main" target="1.8" />
+      <module name="linkedhashmap_test" target="1.8" />
+      <module name="matrices_main" target="1.8" />
+      <module name="matrices_test" target="1.8" />
+      <module name="maybe_main" target="1.8" />
+      <module name="maybe_test" target="1.8" />
+      <module name="reflector_main" target="1.8" />
+      <module name="reflector_test" target="1.8" />
+      <module name="streams_main" target="1.8" />
+      <module name="streams_test" target="1.8" />
+      <module name="threadpool_main" target="1.8" />
+      <module name="threadpool_test" target="1.8" />
+      <module name="tree_main" target="1.8" />
+      <module name="tree_test" target="1.8" />
       <module name="trie_main" target="1.8" />
       <module name="trie_test" target="1.8" />
       <module name="zipfile_main" target="1.8" />
       <module name="zipfile_test" target="1.8" />
-      <module name="maybe_main" target="1.8" />
-      <module name="maybe_test" target="1.8" />
-      <module name="tree_main" target="1.8" />
-      <module name="tree_test" target="1.8" />
-      <module name="calculator_main" target="1.8" />
-      <module name="calculator_test" target="1.8" />
-      <module name="linkedhashmap_main" target="1.8" />
-      <module name="linkedhashmap_test" target="1.8" />
-      <module name="injector_main" target="1.8" />
-      <module name="injector_test" target="1.8" />
-      <module name="matrices_main" target="1.8" />
-      <module name="matrices_test" target="1.8" />
-      <module name="streams_main" target="1.8" />
-      <module name="streams_test" target="1.8" />
-      <module name="reflector_main" target="1.8" />
-      <module name="reflector_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

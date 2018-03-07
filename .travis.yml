@@ -8,6 +8,7 @@ env:
   - TEST_DIR=maybe
   - TEST_DIR=reflector
   - TEST_DIR=streams
+  - TEST_DIR=threadpool
   - TEST_DIR=tree
   - TEST_DIR=trie
   - TEST_DIR=zipfile
