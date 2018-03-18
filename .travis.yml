@@ -7,6 +7,7 @@ env:
   - TEST_DIR=matrices
   - TEST_DIR=maybe
   - TEST_DIR=reflector
+  - TEST_DIR=reversi
   - TEST_DIR=streams
   - TEST_DIR=tree
   - TEST_DIR=trie
