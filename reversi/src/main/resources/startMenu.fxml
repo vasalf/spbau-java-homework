@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ru.spbau.alferov.javahw.reversi.ui.StartMenuFXMLController"
+          alignment="center" hgap="10" vgap="10">
+    <padding>
+        <Insets top="40" right="40" left="40" bottom="40" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="300" prefWidth="300"
+                           maxWidth="Infinity" hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <Button fx:id="startSinglePlayerButton" text="Single Player"
+            prefHeight="80" prefWidth="200"
+            defaultButton="true"
+            GridPane.columnIndex="0" GridPane.rowIndex="0"
+            GridPane.halignment="CENTER"
+            onAction="#handleStartSinglePlayerButtonAction"
+        />
+    <Button fx:id="startMultiPlayerButton" text="Multiplayer"
+            prefHeight="80" prefWidth="200"
+            GridPane.columnIndex="0" GridPane.rowIndex="1"
+            GridPane.halignment="CENTER"
+            onAction="#handleStartMultiPlayerButtonAction"
+        />
+    <Button fx:id="statisticsButton" text="View Statistics"
+            prefHeight="80" prefWidth="200"
+            GridPane.columnIndex="0" GridPane.rowIndex="2"
+            GridPane.halignment="CENTER"
+            onAction="#handleShowStatisticsButtonAction"
+        />
+</GridPane>

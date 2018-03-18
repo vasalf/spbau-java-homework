@@ -1,0 +1,81 @@
+group 'javahw'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    testCompile (
+            'org.junit.jupiter:junit-jupiter-api:5.1.0',
+            'org.mockito:mockito-core:2.+'
+    )
+    testRuntime (
+            'org.junit.jupiter:junit-jupiter-engine:5.1.0',
+            'org.junit.platform:junit-platform-launcher:1.1.0',
+            'org.junit.platform:junit-platform-runner:1.1.0'
+    )
+    compile (
+            'org.jetbrains:annotations:15.0'
+    )
+}
+
+test {
+    useJUnitPlatform()
+    dependsOn 'cleanTest'
+}
+
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'ru.spbau.alferov.javahw.reversi.ReversiApplication'
+        )
+    }
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = '0.8.0'
+    applyTo junitPlatformTest
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                     exclude: ["**/ui/**",
+                               "**/ReversiApplication**",
+                               "**/HumanPlayer**",
+                               "**/player/ai/*Player.class"])
+        })
+    }
+}
+
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+}
+
+jacocoTestReport {
+    reports {
+        html.destination file("${buildDir}/jacoco/html")
+    }
+}

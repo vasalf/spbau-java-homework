@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ru.spbau.alferov.javahw.reversi.ui.SelectOpponentFXMLController"
+          alignment="center" hgap="20" vgap="20">
+    <padding>
+        <Insets top="40" right="40" left="40" bottom="40" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="80" prefWidth="80"
+                           maxWidth="Infinity" hgrow="ALWAYS" />
+        <ColumnConstraints minWidth="80" prefWidth="80"
+                           maxWidth="Infinity" hgrow="NEVER" />
+        <ColumnConstraints minWidth="80" prefWidth="80"
+                           maxWidth="Infinity" hgrow="NEVER" />
+        <ColumnConstraints minWidth="80" prefWidth="80"
+                           maxWidth="80" hgrow="NEVER" />
+    </columnConstraints>
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="RIGHT">Select opponent:</Label>
+
+    <ChoiceBox fx:id="selectOpponentChoice" GridPane.columnIndex="1" GridPane.rowIndex="0"
+               GridPane.columnSpan="2" GridPane.halignment="LEFT" prefWidth="320"/>
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT">Select your side:</Label>
+
+    <RadioButton fx:id="blackSide" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                 GridPane.halignment="CENTER">Black</RadioButton>
+    <RadioButton fx:id="whiteSide" GridPane.columnIndex="2" GridPane.rowIndex="1"
+                 GridPane.halignment="CENTER">White</RadioButton>
+
+    <Button fx:id="newGame" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2"
+                 onAction="#startGame">Start Game</Button>
+</GridPane>
+
