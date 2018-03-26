@@ -5,13 +5,26 @@ import org.jetbrains.annotations.Nullable;
 import ru.spbau.alferov.javahw.reversi.logic.Field;
 import ru.spbau.alferov.javahw.reversi.logic.Turn;
 
+/**
+ * This is the class for human player.
+ */
 public class HumanPlayer extends Player {
+    /**
+     * If some HumanPlayer is waiting for the human to make his turn,
+     * this would not be null.
+     */
     @Nullable
     private static HumanPlayer currentWaitingPlayer = null;
 
+    /**
+     * That is the last turn made by human.
+     */
     @NotNull
     private final Turn currentTurn = new Turn(-1, -1);
 
+    /**
+     * {@link Player#makeTurn(Field)}
+     */
     @Override
     @NotNull
     public Turn makeTurn(Field field) throws GameInterruptedException {
@@ -38,11 +51,19 @@ public class HumanPlayer extends Player {
         return currentTurn;
     }
 
+    /**
+     * {@link Player#getName()}
+     */
     @Override
     public String getName() {
         return "Human";
     }
 
+    /**
+     * This function is called by the UI when human has made the decision.
+     *
+     * @param turn The human's decision.
+     */
     public void tryMakeTurn(Turn turn) {
         synchronized (currentTurn) {
             currentTurn.setTurn(turn);
@@ -50,6 +71,9 @@ public class HumanPlayer extends Player {
         }
     }
 
+    /**
+     * Returns the current waiting player or null if nobody's waiting.
+     */
     @Nullable
     public static HumanPlayer getCurrentWaitingPlayer() {
         return currentWaitingPlayer;

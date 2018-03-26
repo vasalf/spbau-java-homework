@@ -33,16 +33,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This is the basic UI controller.
+ */
 public class ReversiUI {
+    /**
+     * This class is representing a square from the field on the game screen.
+     */
     private static class Square {
+        /**
+         * There the images for the square types are stored.
+         */
         private static final Image emptyImage = new Image("empty.png");
         private static final Image blackImage = new Image("black.png");
         private static final Image whiteImage = new Image("white.png");
 
+        /**
+         * This is the ImageView for the square.
+         */
         private ImageView element;
 
+        /**
+         * These are the coordinates for the square (top-left is 0, 0)
+         */
         private int row, column;
 
+        /**
+         * This is the function to be called whenever the ImageView is clicked.
+         */
         private void onClickAction() {
             HumanPlayer player = HumanPlayer.getCurrentWaitingPlayer();
             if (player != null) {
@@ -50,6 +68,9 @@ public class ReversiUI {
             }
         }
 
+        /**
+         * The basic constructor.
+         */
         public Square(int r, int c) {
             row = r;
             column = c;
@@ -57,6 +78,9 @@ public class ReversiUI {
             element.setOnMouseClicked(e -> onClickAction());
         }
 
+        /**
+         * Sets the image for the square.
+         */
         public void setType(SquareType type) {
             if (type == SquareType.EMPTY) {
                 element.setImage(emptyImage);
@@ -66,37 +90,60 @@ public class ReversiUI {
                 element.setImage(whiteImage);
             }
         }
-
-        public String coordinate() {
-            return "" + (char)('a' + column) + (char)('8' - row);
-        }
     }
 
+    /**
+     * This is the JavaFX Stage.
+     */
     @NotNull
     private Stage stage;
-    
+
+    /**
+     * This is the start menu scene.
+     */
     @NotNull
     private Scene startMenu;
 
+    /**
+     * This is the opponent selection scene.
+     */
     @NotNull
     private Scene selectOpponentScene;
 
+    /**
+     * This is the game scene.
+     */
     @NotNull
     private Scene gameScreen;
 
+    /**
+     * This is the statistics viewer scene.
+     */
     @NotNull
     private Scene statsScreen;
 
+    /**
+     * This is the statistics table.
+     */
     private @NotNull TableView<PlayedGame> statsTable;
 
+    /**
+     * This is the array for the field on game screen.
+     */
     @NotNull
     private Square[][] squares;
 
+    /**
+     * This initializes the start menu scene,
+     */
     private void initStartMenu() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("startMenu.fxml"));
         startMenu = new Scene(root, 680, 480);
     }
 
+    /**
+     * This initializes the opponent selection scene.
+     */
     private void initSelectOpponentScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("selectOpponent.fxml"));
         selectOpponentScene = new Scene(root, 680, 480);
@@ -120,6 +167,9 @@ public class ReversiUI {
         choiceBox.setItems(observableList);
     }
 
+    /**
+     * This initializes the game screen.
+     */
     private void initGameScreen() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("gameScreen.fxml"));
         gameScreen = new Scene(root, 680, 480);
@@ -143,6 +193,12 @@ public class ReversiUI {
         }
     }
 
+    /**
+     * This is the class for statistics columns created to avoid the code
+     * repetition in {@link #initStatistics()}.
+     *
+     * @param <T> Type to be displayed.
+     */
     private static class StatisticsTableColumn<T> extends TableColumn<PlayedGame, T> {
         public StatisticsTableColumn(String name,
                                      int width,
@@ -155,6 +211,10 @@ public class ReversiUI {
         }
     }
 
+    /**
+     * This initializes the statistics screen.
+     */
+    @SuppressWarnings("unchecked")
     private void initStatistics() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("statistics.fxml"));
         statsScreen = new Scene(root, 680, 480);
@@ -171,12 +231,18 @@ public class ReversiUI {
         statsTable.getColumns().setAll(blackNameCol, whiteNameCol, blackScoreCol, whiteScoreCol);
     }
 
+    /**
+     * This initializes the overall stage.
+     */
     private void initStage() throws IOException {
         stage.setTitle("Reversi");
         stage.setScene(startMenu);
         stage.show();
     }
 
+    /**
+     * This constructor initalizes everything.
+     */
     public ReversiUI(@NotNull Stage primaryStage) throws IOException {
         stage = primaryStage;
         initStartMenu();
@@ -186,26 +252,44 @@ public class ReversiUI {
         initStage();
     }
 
+    /**
+     * This switches the scene to the opponent selection scene.
+     */
     public void switchToOpponentSelection() {
         stage.setScene(selectOpponentScene);
     }
 
+    /**
+     * This switches the scene to the game scene.
+     */
     public void switchToGameScreen() {
         stage.setScene(gameScreen);
     }
 
+    /**
+     * This switches the scene to the main menu scene.
+     */
     public void switchToMainMenu() {
         stage.setScene(startMenu);
     }
 
+    /**
+     * This swtches the scene to the statistics scene.
+     */
     public void switchToStatsScreen() {
         stage.setScene(statsScreen);
     }
 
+    /**
+     * Routine function called wherever it is necessary to set the label text.
+     */
     private void setLabelText(Label label, String text) {
         Platform.runLater(() -> label.setText(text));
     }
 
+    /**
+     * This updates the game shown on the game screen.
+     */
     public void displayField(Field field, Game game) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -234,6 +318,9 @@ public class ReversiUI {
         }
     }
 
+    /**
+     * This updates the stats list.
+     */
     public void updateStatsList(List<PlayedGame> stats) {
         statsTable.setItems(FXCollections.observableList(stats));
     }

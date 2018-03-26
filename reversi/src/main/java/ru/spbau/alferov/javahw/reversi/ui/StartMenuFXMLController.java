@@ -6,6 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import ru.spbau.alferov.javahw.reversi.ReversiApplication;
 
+/**
+ * This is the FXML controller for the start menu.
+ */
 public class StartMenuFXMLController {
     @FXML
     private Button startSinglePlayerButton;

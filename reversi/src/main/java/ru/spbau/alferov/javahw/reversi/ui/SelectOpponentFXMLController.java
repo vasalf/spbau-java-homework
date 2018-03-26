@@ -6,6 +6,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import ru.spbau.alferov.javahw.reversi.ReversiApplication;
 
+/**
+ * This is the FXML controller for the opponent selection screen.
+ */
 public class SelectOpponentFXMLController {
     public ChoiceBox<String> selectOpponentChoice;
     public RadioButton blackSide;

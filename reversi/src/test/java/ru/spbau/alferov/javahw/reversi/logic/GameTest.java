@@ -10,6 +10,9 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest extends BaseLogicTest {
+    /**
+     * This is the player that us always skipping his turn.
+     */
     private static class SkippingIdentifiedPlayer extends AIPlayer {
         private int id;
 
@@ -17,6 +20,7 @@ public class GameTest extends BaseLogicTest {
             this.id = id;
         }
 
+        @NotNull
         @Override
         public Turn makeTurn(Field field) {
             return new Turn(-1, -1);
@@ -28,6 +32,9 @@ public class GameTest extends BaseLogicTest {
         }
     }
 
+    /**
+     * This player makes turns in given order.
+     */
     private static class RecordedPlayer extends AIPlayer {
         @NotNull
         private Turn[] toMake;
@@ -41,6 +48,7 @@ public class GameTest extends BaseLogicTest {
             toMake = Arrays.stream(turns).map(RecordedPlayer::parseTurn).toArray(Turn[]::new);
         }
 
+        @NotNull
         @Override
         public Turn makeTurn(Field field) {
             Turn ret = toMake[nextTurnIndex];
@@ -54,12 +62,20 @@ public class GameTest extends BaseLogicTest {
         }
     }
 
+    /**
+     * This tests the player getters for the {@link Game}.
+     */
     @Test
     public void testGetPlayer() {
         Game game = new Game(new SkippingIdentifiedPlayer(179), new SkippingIdentifiedPlayer(239));
         assertEquals("179", game.getBlackPlayer().getName());
         assertEquals("239", game.getWhitePlayer().getName());
     }
+
+    /**
+     * Next four functions are testing that the Game correctly determines
+     * the current result.
+     */
 
     @Test
     public void testInProgressGameResult() {
@@ -137,6 +153,9 @@ public class GameTest extends BaseLogicTest {
         assertEquals(Game.Result.DRAW, game.getResult());
     }
 
+    /**
+     * This tests the played game on some sequence of turns.
+     */
     @Test
     public void testPlay() throws Player.GameInterruptedException {
         String[] blackTurns = {"d6", "b3", "f5", "c5", "f3", "d3", "b4", "b6", "g4", "f7", "b5", "c7", "e2", "h5", "g5",
@@ -160,6 +179,9 @@ public class GameTest extends BaseLogicTest {
         assertEquals(Game.Result.BLACK_WINS, game.getResult());
     }
 
+    /**
+     * This tests the play function on some given turns where the black player sometimes skipes his turn.
+     */
     @Test
     public void testBlackSkippingPlay() throws Player.GameInterruptedException {
         String[] blackTurns = {"f4", "f2", "d6", "g5", "d7", "g4", "e6", "g6", "c8", "b7", "c5", "g3", "e3", "b6", "c3",
@@ -183,6 +205,9 @@ public class GameTest extends BaseLogicTest {
         assertEquals(Game.Result.WHITE_WINS, game.getResult());
     }
 
+    /**
+     * This tests the play function on some recorded game where white player sometimes skips his turn.
+     */
     @Test
     public void testWhiteSkippingPlay() throws Player.GameInterruptedException {
         String[] blackTurns = {"d6", "b6", "f6", "f4", "g4", "f8", "h6", "g3", "h4", "h8", "h2", "g7", "c5", "b4", "c7",
@@ -207,6 +232,9 @@ public class GameTest extends BaseLogicTest {
         assertEquals(Game.Result.BLACK_WINS, game.getResult());
     }
 
+    /**
+     * This tests the play function on some game finished earlier than the field is full.
+     */
     @Test
     public void testGameEndOnNonFullField() throws Player.GameInterruptedException {
         String[] blackTurns = {"e3", "g6", "g3", "f4", "c3", "c5", "f2", "b2", "g5", "g7", "g8", "g1", "h4", "d2", "g4",

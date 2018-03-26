@@ -15,6 +15,9 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AIStorageTest extends BaseTest {
+    /**
+     * This is the player which always skips his turn.
+     */
     private static class NamedSkippingPlayer extends AIPlayer {
         @NotNull
         String name;
@@ -23,6 +26,7 @@ public class AIStorageTest extends BaseTest {
             this.name = name;
         }
 
+        @NotNull
         @Override
         public Turn makeTurn(Field field) throws GameInterruptedException {
             return new Turn(-1, -1);
@@ -40,6 +44,9 @@ public class AIStorageTest extends BaseTest {
         aiStorage = new AIStorage();
     }
 
+    /**
+     * Tests that the AI players are given in the map order.
+     */
     @Test
     public void testAIStorageMapOrder() {
         AIStorage aiStorage = ReversiApplication.getInstance().getAiStorage();
@@ -51,6 +58,9 @@ public class AIStorageTest extends BaseTest {
         assertArrayEquals(exp, names);
     }
 
+    /**
+     * Tests that the RuntimeException is thrown in case some players have colliding names.
+     */
     @Test
     public void testAIStorageEqualKeys() {
         AIStorage aiStorage = ReversiApplication.getInstance().getAiStorage();

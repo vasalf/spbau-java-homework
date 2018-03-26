@@ -7,6 +7,9 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FieldTest extends BaseLogicTest {
+    /**
+     * Tests that the initial position is set up correctly.
+     */
     @Test
     public void testInitialPosition() {
         String[] initialPosition = {
@@ -24,6 +27,9 @@ public class FieldTest extends BaseLogicTest {
         assertTrue(f.isBlackTurn());
     }
 
+    /**
+     * Tests all of the allowed turns in selected position.
+     */
     @Test
     public void testIsAllowedTurnForInitialPosition() {
         Field f = new Field();
@@ -38,6 +44,9 @@ public class FieldTest extends BaseLogicTest {
         assertTrue(f.isAllowedTurn(3, 2));
     }
 
+    /**
+     * Tests that moving without reversing opponent pieces is not allowed.
+     */
     @Test
     public void testFarTurnIsNotAllowed() {
         String[] position = {
@@ -53,6 +62,10 @@ public class FieldTest extends BaseLogicTest {
         Field f = createFieldFromPosition(position);
         assertFalse(f.isAllowedTurn(7, 7));
     }
+
+    /**
+     * Next tests are testing the inversion of pieces.
+     */
 
     @Test
     public void testTurnInversionUp() {
@@ -302,6 +315,9 @@ public class FieldTest extends BaseLogicTest {
         assertEquals(0, endField.getWhiteScore());
     }
 
+    /**
+     * Tests the inversion in all of the possible directions.
+     */
     @Test
     public void testTurnComplexInversion() {
          String[] startPosition = {
@@ -333,6 +349,9 @@ public class FieldTest extends BaseLogicTest {
         assertEquals(28, endField.getWhiteScore());
     }
 
+    /**
+     * Tests the list of allowed turns for the position.
+     */
     @Test
     public void testGetAllowedTurns() {
         String[] position = {
@@ -358,6 +377,9 @@ public class FieldTest extends BaseLogicTest {
                 new Turn(2, 6)), field.getAllowedTurns());
     }
 
+    /**
+     * Tests the square getter in the Field.
+     */
     @Test
     public void testGetSquare() {
         String[] position = {
@@ -384,6 +406,9 @@ public class FieldTest extends BaseLogicTest {
         }
     }
 
+    /**
+     * Tests that fields allows to skip turn.
+     */
     @Test
     public void testSkipTurn() {
         String[] position = createPositionFromField(new Field());

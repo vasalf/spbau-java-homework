@@ -7,11 +7,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class handles all of the stats-related actions.
+ */
 public class StatisticsController {
+    /**
+     * List of the played games.
+     */
     @NotNull
-    public List<PlayedGame> stats = new ArrayList<>();
+    private List<PlayedGame> stats = new ArrayList<>();
 
-    public void add(PlayedGame game) {
+    /**
+     * Adds a new played game to the list.
+     */
+    public void add(@NotNull PlayedGame game) {
         Collections.reverse(stats);
         stats.add(game);
         Collections.reverse(stats);

@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import ru.spbau.alferov.javahw.reversi.ReversiApplication;
 
+/**
+ * This is the FXML controller for the game screen.
+ */
 public class GameScreenFXMLController {
     public GridPane field;
     public GridPane layout;

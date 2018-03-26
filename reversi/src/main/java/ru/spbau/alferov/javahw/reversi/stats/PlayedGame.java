@@ -2,6 +2,11 @@ package ru.spbau.alferov.javahw.reversi.stats;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * That is a data class for storing game in the stats.
+ *
+ * Actually, all of the names seems so clear that I don't feel like writing javadocs.
+ */
 public class PlayedGame {
     @NotNull
     private String blackPlayerName;

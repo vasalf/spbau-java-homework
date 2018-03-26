@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TurnTest {
+    /**
+     * Tests the turn setter.
+     */
     @Test
     public void testSetTurn() {
         Turn turn = new Turn(-1, -1);

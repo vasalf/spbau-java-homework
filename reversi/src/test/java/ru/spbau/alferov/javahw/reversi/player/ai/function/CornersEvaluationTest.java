@@ -7,11 +7,17 @@ import ru.spbau.alferov.javahw.reversi.logic.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CornersEvaluationTest extends BaseLogicTest {
+    /**
+     * Tests that the function does not have an empty name.
+     */
     @Test
     public void testNonEmptyName() {
         assertNotEquals("", new CornersEvaluation().getName());
     }
 
+    /**
+     * Tests that the scoew of non-corner squares is 1.
+     */
     @Test
     public void testNoCornersScore() {
         String[] position = {
@@ -28,6 +34,9 @@ public class CornersEvaluationTest extends BaseLogicTest {
         assertEquals(field.getBlackScore() - field.getWhiteScore(), new CornersEvaluation().evaluate(field));
     }
 
+    /**
+     * Tests that the score of corners is 10/
+     */
     @Test
     public void testBlackCornersScore() {
         String[] position = {

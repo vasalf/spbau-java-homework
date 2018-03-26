@@ -7,11 +7,17 @@ import ru.spbau.alferov.javahw.reversi.logic.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NumberOfTurnsEvaluationTest extends BaseLogicTest {
+    /**
+     * Tests that the function does not have an empty name.
+     */
     @Test
     public void testNonEmptyName() {
         assertNotEquals("", new NumberOfTurnsEvaluation().getName());
     }
 
+    /**
+     * Tests the function values.
+     */
     @Test
     public void testEvaluation() {
         String[] position = {

@@ -7,11 +7,17 @@ import ru.spbau.alferov.javahw.reversi.logic.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreEvaluationTest extends BaseLogicTest {
+    /**
+     * Tests that the function does not have an empty name.
+     */
     @Test
     public void testNonEmptyName() {
         assertNotEquals("", new ScoreEvaluation().getName());
     }
 
+    /**
+     * Tests the funciton on some position where black player won.
+     */
     @Test
     public void testBlackWinPosition() {
         String[] position = {
@@ -28,6 +34,9 @@ public class ScoreEvaluationTest extends BaseLogicTest {
         assertTrue(new ScoreEvaluation().evaluate(field) > 0);
     }
 
+    /**
+     * Tests the funciton on some draw position.
+     */
     @Test
     public void testDrawPosition() {
         String[] position = {
@@ -44,6 +53,9 @@ public class ScoreEvaluationTest extends BaseLogicTest {
         assertTrue(new ScoreEvaluation().evaluate(field) == 0);
     }
 
+    /**
+     * Tests the funciton on some position where white player won.
+     */
     @Test
     public void testWhiteWinPosition() {
         String[] position = {

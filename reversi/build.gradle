@@ -62,8 +62,7 @@ jacocoTestReport {
             fileTree(dir: it,
                      exclude: ["**/ui/**",
                                "**/ReversiApplication**",
-                               "**/HumanPlayer**",
-                               "**/player/ai/*Player.class"])
+                               "**/HumanPlayer.class"])
         })
     }
 }

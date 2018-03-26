@@ -8,6 +8,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Base class for all of the logic and player tests.
+ * Allows test classes to create the field and access fields in Game.
+ */
 public class BaseLogicTest extends BaseTest {
     private static java.lang.reflect.Field fieldField;
     private static java.lang.reflect.Field fieldBlackScore;
@@ -50,6 +54,9 @@ public class BaseLogicTest extends BaseTest {
         }
     }
 
+    /**
+     * Asserts that sets of turns represented by given lists are equal.
+     */
     protected static void assertTurnSetsEqual(List<Turn> expected, List<Turn> actual) {
         assertEquals(expected.size(), actual.size());
         boolean[] used = new boolean[expected.size()];
@@ -69,6 +76,11 @@ public class BaseLogicTest extends BaseTest {
         }
     }
 
+    /**
+     * Creates a field from given position.
+     * Position is an array of 8 Strings of length 8.
+     * Empty square is represented by dot ('.'), black and white -- by 'B' and 'W".
+     */
     protected Field createFieldFromPosition(String[] position) {
         Field ret = new Field();
         SquareType[][] toBePut = new SquareType[8][8];
@@ -96,6 +108,9 @@ public class BaseLogicTest extends BaseTest {
         return ret;
     }
 
+    /**
+     * This is doing the reverse thing for {@link #createFieldFromPosition(String[])}
+     */
     protected String[] createPositionFromField (Field field) {
         SquareType[][] inner;
         try {
@@ -121,6 +136,9 @@ public class BaseLogicTest extends BaseTest {
         return ret;
     }
 
+    /**
+     * This sets up blackTurn variable in {@link Field}.
+     */
     protected void setBlackTurnInField(Field field, boolean blackTurn) {
         try {
             fieldBlackTurn.setBoolean(field, blackTurn);
@@ -129,6 +147,9 @@ public class BaseLogicTest extends BaseTest {
         }
     }
 
+    /**
+     * This sets up the field in the game.
+     */
     protected void setGameField(Game game, Field field) {
         try {
             gameField.set(game, field);
@@ -137,6 +158,9 @@ public class BaseLogicTest extends BaseTest {
         }
     }
 
+    /**
+     * This gets the Field from the game.
+     */
     protected Field getGameField(Game game) {
         try {
             return (Field)gameField.get(game);

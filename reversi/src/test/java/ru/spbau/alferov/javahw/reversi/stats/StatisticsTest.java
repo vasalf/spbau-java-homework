@@ -8,6 +8,9 @@ import ru.spbau.alferov.javahw.reversi.BaseTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StatisticsTest extends BaseTest {
+    /**
+     * Asserts that two PlayedGames are equal.
+     */
     private void assertPlayedGameEquals(PlayedGame expected, PlayedGame actual) {
         assertEquals(expected.getBlackPlayerName(), actual.getBlackPlayerName());
         assertEquals(expected.getWhitePlayerName(), actual.getWhitePlayerName());
@@ -20,6 +23,9 @@ public class StatisticsTest extends BaseTest {
         lastStatsSet.clear();
     }
 
+    /**
+     * Tests the stats controller with one played game.
+     */
     @Test
     public void testOnePlayedGameStats() {
         PlayedGame playedGame = new PlayedGame("a", "b", 32, 32);
@@ -29,6 +35,9 @@ public class StatisticsTest extends BaseTest {
         assertPlayedGameEquals(playedGame, lastStatsSet.get(0));
     }
 
+    /**
+     * Tests that the games are given in the correct order.
+     */
     @Test
     public void testStatsOrder() {
         StatisticsController statisticsController = new StatisticsController();
