@@ -20,6 +20,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/maybe.iml" filepath="$PROJECT_DIR$/.idea/modules/maybe.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/maybe_main.iml" filepath="$PROJECT_DIR$/.idea/modules/maybe_main.iml" group="maybe" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/maybe_test.iml" filepath="$PROJECT_DIR$/.idea/modules/maybe_test.iml" group="maybe" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/md5.iml" filepath="$PROJECT_DIR$/.idea/modules/md5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/md5_main.iml" filepath="$PROJECT_DIR$/.idea/modules/md5_main.iml" group="md5" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/md5_test.iml" filepath="$PROJECT_DIR$/.idea/modules/md5_test.iml" group="md5" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_main.iml" group="reflector" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_test.iml" group="reflector" />
