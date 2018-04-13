@@ -3,7 +3,6 @@ package ru.spbau.alferov.javacw.md5;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
