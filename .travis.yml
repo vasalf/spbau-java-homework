@@ -1,11 +1,13 @@
 language: java
 env:
   - TEST_DIR=calculator
+  - TEST_DIR=findpair
   - TEST_DIR=hashtable
   - TEST_DIR=injector
   - TEST_DIR=linkedhashmap
   - TEST_DIR=matrices
   - TEST_DIR=maybe
+  - TEST_DIR=md5
   - TEST_DIR=reflector
   - TEST_DIR=streams
   - TEST_DIR=tree

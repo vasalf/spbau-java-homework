@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="calculator_main" target="1.8" />
       <module name="calculator_test" target="1.8" />
+      <module name="findpair_main" target="1.8" />
+      <module name="findpair_test" target="1.8" />
       <module name="injector_main" target="1.8" />
       <module name="injector_test" target="1.8" />
       <module name="linkedhashmap_main" target="1.8" />
