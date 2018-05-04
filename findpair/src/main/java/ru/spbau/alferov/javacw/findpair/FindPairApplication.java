@@ -6,13 +6,32 @@ import org.jetbrains.annotations.NotNull;
 import ru.spbau.alferov.javacw.findpair.logic.LogicController;
 import ru.spbau.alferov.javacw.findpair.ui.UIController;
 
+/**
+ * This is the JavaFX Application of the game.
+ *
+ * The application should be built with gradle :jar task.
+ * The jar file should be launched with a single comand line argument.
+ * It is the field size. This should be an even integer greater than or equal to 4.
+ */
 public class FindPairApplication extends Application {
+    /**
+     * Instance of the application.
+     */
     private static FindPairApplication instance;
 
+    /**
+     * The logic controller.
+     */
     private LogicController logic;
 
+    /**
+     * The UI controller.
+     */
     private UIController ui;
 
+    /**
+     * This is thrown if the arguments aren't set up properly.
+     */
     private static class InvalidLaunchArgumentException extends Exception {
         public InvalidLaunchArgumentException(String message) {
             super(message);
@@ -23,6 +42,10 @@ public class FindPairApplication extends Application {
         }
     }
 
+    /**
+     * This creates a logic controller.
+     * @throws InvalidLaunchArgumentException
+     */
     private void setUpLogic() throws InvalidLaunchArgumentException {
         Application.Parameters parameters = getParameters();
         if (parameters == null) {
@@ -41,9 +64,15 @@ public class FindPairApplication extends Application {
         if (parsedFieldSize % 2 == 1) {
             throw new InvalidLaunchArgumentException("The field size should be an even number.");
         }
+        if (parsedFieldSize < 4) {
+            throw new InvalidLaunchArgumentException("The field size should be greater than or equal to 4.");
+        }
         logic = new LogicController(parsedFieldSize);
     }
 
+    /**
+     * The start method of the FX Application.
+     */
     @Override
     public void start(@NotNull Stage primaryStage) throws Exception {
         instance = this;
@@ -51,18 +80,30 @@ public class FindPairApplication extends Application {
         ui = new UIController(primaryStage, logic);
     }
 
+    /**
+     * Gets the instance of the application.
+     */
     public static FindPairApplication getInstance() {
         return instance;
     }
 
+    /**
+     * Gets the instance of the logic controller.
+     */
     public LogicController getLogic() {
         return logic;
     }
 
+    /**
+     * Gets the instance of the UI controller.
+     */
     public UIController getUI() {
         return ui;
     }
 
+    /**
+     * Launches the application.
+     */
     public static void main(String[] args) {
         launch(args);
     }
