@@ -38,4 +38,16 @@ public class FTPFile {
         this.name = name;
         this.isDir = isDir;
     }
+
+    /**
+     * Compares two files on being equal.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof FTPFile)) {
+            return false;
+        }
+        FTPFile otherFile = (FTPFile)other;
+        return name.equals(otherFile.getName()) && isDir == otherFile.isDir();
+    }
 }

@@ -2,6 +2,7 @@ package ru.spbau.alferov.javahw.simpleftp.server;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.spbau.alferov.javahw.simpleftp.TestWithPipedClientServerStreams;
 
 import java.io.*;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * This tests the {@link ServerProtocol} class on the test resources.
  */
-class ServerProtocolTest {
+class ServerProtocolTest extends TestWithPipedClientServerStreams {
     /**
      * This is a protocol instance to be tested. It is created before each test.
      */
@@ -27,41 +28,6 @@ class ServerProtocolTest {
         protocol = new ServerProtocol(file);
     }
 
-    /**
-     * This is the stream in which the client (tester) should write the data.
-     */
-    private DataOutputStream clientOut;
-
-    /**
-     * This is the stream from which the server receives the data.
-     */
-    private DataInputStream serverIn;
-
-    /**
-     * This is the stream to which the server writes the data.
-     */
-    private DataOutputStream serverOut;
-
-    /**
-     * This is the stream from which the client (tester) should receive the data.
-     */
-    private DataInputStream clientIn;
-
-    /**
-     * This pipes the {@link #serverIn}, {@link #serverOut}, {@link #clientIn}, {@link #clientOut} streams together.
-     */
-    @BeforeEach
-    public void setUpPipes() throws Exception {
-        PipedOutputStream clientOutStream = new PipedOutputStream();
-        PipedInputStream serverInStream = new PipedInputStream(clientOutStream);
-        PipedOutputStream serverOutStream = new PipedOutputStream();
-        PipedInputStream clientInStream = new PipedInputStream(serverOutStream);
-
-        clientOut = new DataOutputStream(clientOutStream);
-        serverIn = new DataInputStream(serverInStream);
-        serverOut = new DataOutputStream(serverOutStream);
-        clientIn = new DataInputStream(clientInStream);
-    }
 
     /**
      * This tests the list command on the server root.
@@ -141,5 +107,49 @@ class ServerProtocolTest {
         assertArrayEquals(bContent, readClientsBytes(bContent.length));
         assertEquals(cContent.length, clientIn.readLong());
         assertArrayEquals(cContent, readClientsBytes(cContent.length));
+    }
+
+    /**
+     * This tests that listing of non-existent directory works as specified.
+     */
+    @Test
+    public void testNonExistentDirectoryList() throws Exception {
+        clientOut.writeInt(1);
+        clientOut.writeUTF("/non_existent/directory");
+        clientOut.writeInt(3);
+
+        protocol.interactWithClient(serverIn, serverOut);
+
+        assertEquals(0, clientIn.readInt());
+    }
+
+    /**
+     * This tests that reading content of non-existent file works as specified.
+     */
+    @Test
+    public void testNonExistentFileGet() throws Exception {
+        clientOut.writeInt(2);
+        clientOut.writeUTF("/non_existent/file");
+        clientOut.writeInt(3);
+
+        protocol.interactWithClient(serverIn, serverOut);
+
+        assertEquals(0, clientIn.readInt());
+    }
+
+    /**
+     * This tests that listing a file works correctly.
+     */
+    @Test
+    public void testListFile() throws Exception {
+        clientOut.writeInt(1);
+        clientOut.writeUTF("/a.txt");
+        clientOut.writeInt(3);
+
+        protocol.interactWithClient(serverIn, serverOut);
+
+        assertEquals(1, clientIn.readInt());
+        assertEquals("a.txt", clientIn.readUTF());
+        assertFalse(clientIn.readBoolean());
     }
 }
