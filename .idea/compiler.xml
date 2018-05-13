@@ -16,6 +16,8 @@
       <module name="md5_test" target="1.8" />
       <module name="reflector_main" target="1.8" />
       <module name="reflector_test" target="1.8" />
+      <module name="simpleftp_main" target="1.8" />
+      <module name="simpleftp_test" target="1.8" />
       <module name="streams_main" target="1.8" />
       <module name="streams_test" target="1.8" />
       <module name="tree_main" target="1.8" />

@@ -26,6 +26,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_main.iml" group="reflector" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/reflector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/reflector_test.iml" group="reflector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simpleftp.iml" filepath="$PROJECT_DIR$/.idea/modules/simpleftp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simpleftp_main.iml" filepath="$PROJECT_DIR$/.idea/modules/simpleftp_main.iml" group="simpleftp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simpleftp_test.iml" filepath="$PROJECT_DIR$/.idea/modules/simpleftp_test.iml" group="simpleftp" />
       <module fileurl="file://$PROJECT_DIR$/spbau-java-homework.iml" filepath="$PROJECT_DIR$/spbau-java-homework.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/streams.iml" filepath="$PROJECT_DIR$/.idea/modules/streams.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/streams_main.iml" filepath="$PROJECT_DIR$/.idea/modules/streams_main.iml" group="streams" />
