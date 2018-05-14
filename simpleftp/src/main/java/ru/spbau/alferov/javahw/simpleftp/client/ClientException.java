@@ -8,13 +8,13 @@ public class ClientException extends Exception {
      * Constructs an exception with reason.
      */
     public ClientException(String reasonMessage, Throwable reason) {
-        super("Client has stopped working: " + reasonMessage, reason);
+        super("Client has stopped working: " + reasonMessage + ": " + reason.getMessage(), reason);
     }
 
     /**
      * Constructs an exception.
      */
     public ClientException(String message) {
-        super(message);
+        super("Client has stopped working: " + message);
     }
 }

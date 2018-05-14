@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ru.spbau.alferov.javahw.simpleftp.gui.ui.RemoteScreenFXMLController"
+          minWidth="600" minHeight="400"
+          hgap="20" vgap="20">
+    <padding>
+        <Insets top="20" right="20" left="20" bottom="20"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="200" prefWidth="200" maxWidth="Infinity" hgrow="ALWAYS"/>
+        <ColumnConstraints minWidth="70" prefWidth="70" maxWidth="Infinity" hgrow="NEVER"/>
+        <ColumnConstraints minWidth="70" prefWidth="70" maxWidth="Infinity" hgrow="NEVER"/>
+    </columnConstraints>
+
+    <TreeView GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="3" fx:id="files"/>
+    <Button GridPane.rowIndex="1" GridPane.columnIndex="1" text="Refresh" onAction="#refresh" />
+    <Button GridPane.rowIndex="1" GridPane.columnIndex="2" text="Save" onAction="#save"/>
+</GridPane>

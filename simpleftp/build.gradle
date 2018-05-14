@@ -56,6 +56,13 @@ task serverJar(dependsOn: classes, type: Jar) {
     }
 }
 
+jar {
+    baseName = "SimpleFTPApplication"
+    manifest {
+        attributes("Main-Class": "ru.spbau.alferov.javahw.simpleftp.gui.SimpleFTPApplication")
+    }
+}
+
 build {
     dependsOn clientJar
     dependsOn serverJar

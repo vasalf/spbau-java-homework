@@ -67,6 +67,19 @@ public class SimpleFTPClient {
     }
 
     /**
+     * Closes the connection to the server.
+     */
+    public void disconnect() throws ClientException {
+        if (socket.isConnected()) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new ClientException("I/O exception occurred while trying to close the connection", e);
+            }
+        }
+    }
+
+    /**
      * Requests the content of some remote directory.
      *
      * {@see The protocol description.}
