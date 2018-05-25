@@ -11,7 +11,6 @@ import javafx.geometry.HPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -117,6 +116,24 @@ public class ReversiUI {
     private Scene gameScreen;
 
     /**
+     * This is the network menu scene.
+     */
+    @NotNull
+    private Scene networkMenu;
+
+    /**
+     * This is the server menu scene.
+     */
+    @NotNull
+    private Scene serverScene;
+
+    /**
+     * This is the client menu scene.
+     */
+    @NotNull
+    private Scene clientScene;
+
+    /**
      * This is the statistics viewer scene.
      */
     @NotNull
@@ -134,11 +151,55 @@ public class ReversiUI {
     private Square[][] squares;
 
     /**
-     * This initializes the start menu scene,
+     * This initializes the start menu scene.
      */
     private void initStartMenu() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("startMenu.fxml"));
         startMenu = new Scene(root, 680, 480);
+    }
+
+    /**
+     * This initializes the network menu scene.
+     */
+    private void initNetworkMenu() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("networkMenu.fxml"));
+        networkMenu = new Scene(root, 680, 240);
+    }
+
+    /**
+     * This is the server status label.
+     */
+    @NotNull Label serverStatusLabel;
+
+    /**
+     * This is the server start button.
+     */
+    @NotNull Button serverStartButton;
+
+    /**
+     * This initializes the server menu scene.
+     */
+    private void initServerMenu() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("serverMenu.fxml"));
+        serverScene = new Scene(root, 300, 240);
+
+        RadioButton black = (RadioButton)serverScene.lookup("#blackSide");
+        RadioButton white = (RadioButton)serverScene.lookup("#whiteSide");
+        ToggleGroup selGroup = new ToggleGroup();
+        black.setToggleGroup(selGroup);
+        white.setToggleGroup(selGroup);
+        black.fire();
+
+        serverStatusLabel = (Label)serverScene.lookup("#status");
+        serverStartButton = (Button)serverScene.lookup("#start");
+    }
+
+    /**
+     * This initializes the client menu scene
+     */
+    private void initClientMenu() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("clientMenu.fxml"));
+        clientScene = new Scene(root, 680, 240);
     }
 
     /**
@@ -246,6 +307,9 @@ public class ReversiUI {
     public ReversiUI(@NotNull Stage primaryStage) throws IOException {
         stage = primaryStage;
         initStartMenu();
+        initNetworkMenu();
+        initServerMenu();
+        initClientMenu();
         initSelectOpponentScene();
         initGameScreen();
         initStatistics();
@@ -274,10 +338,28 @@ public class ReversiUI {
     }
 
     /**
-     * This swtches the scene to the statistics scene.
+     * This switches the scene to the statistics scene.
      */
     public void switchToStatsScreen() {
         stage.setScene(statsScreen);
+    }
+
+    /**
+     * This switches the scene to the network menu.
+     */
+    public void switchToNetworkMenu() {
+        stage.setScene(networkMenu);
+    }
+
+    /**
+     * This switches the scene to the server menu.
+     */
+    public void switchToServerMenu() {
+        stage.setScene(serverScene);
+    }
+
+    public void switchToClientMenu() {
+        stage.setScene(clientScene);
     }
 
     /**
@@ -323,5 +405,27 @@ public class ReversiUI {
      */
     public void updateStatsList(List<PlayedGame> stats) {
         statsTable.setItems(FXCollections.observableList(stats));
+    }
+
+    /**
+     * This indicates an IO exception.
+     */
+    public void indicateIOException(IOException e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Networking error");
+        alert.setHeaderText("An I/O exception is thrown while interacting in network");
+        alert.setContentText(e.getMessage());
+
+        alert.showAndWait();
+    }
+
+    /**
+     * This resets the server menu so user is able to connect again.
+     */
+    public void resetServerScene() {
+        Platform.runLater(() -> {
+            serverStatusLabel.setText("");
+            serverStartButton.setDisable(false);
+      });
     }
 }

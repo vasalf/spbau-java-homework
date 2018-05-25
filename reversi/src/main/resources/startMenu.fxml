@@ -28,9 +28,15 @@
             GridPane.halignment="CENTER"
             onAction="#handleStartMultiPlayerButtonAction"
         />
-    <Button fx:id="statisticsButton" text="View Statistics"
+    <Button fx:id="startNetworkButton" text="Network"
             prefHeight="80" prefWidth="200"
             GridPane.columnIndex="0" GridPane.rowIndex="2"
+            GridPane.halignment="CENTER"
+            onAction="#handleStartNetworkButtonAction"
+        />
+    <Button fx:id="statisticsButton" text="View Statistics"
+            prefHeight="80" prefWidth="200"
+            GridPane.columnIndex="0" GridPane.rowIndex="3"
             GridPane.halignment="CENTER"
             onAction="#handleShowStatisticsButtonAction"
         />

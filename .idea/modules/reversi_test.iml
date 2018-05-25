@@ -5,22 +5,21 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../reversi/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../reversi/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../reversi/src/test/resources" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="reversi_main" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:15.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.mockito:mockito-core:2.16.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.mockito:mockito-core:2.18.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apiguardian:apiguardian-api:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-runner:1.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.7.9" level="project" />
-    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.7.9" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy:1.8.5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-launcher:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: net.bytebuddy:byte-buddy-agent:1.8.5" level="project" />
     <orderEntry type="library" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.1.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-suite-api:1.1.0" level="project" />

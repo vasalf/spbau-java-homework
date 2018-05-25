@@ -17,6 +17,9 @@ public class StartMenuFXMLController {
     private Button startMultiPlayerButton;
 
     @FXML
+    private Button startNetworkButton;
+
+    @FXML
     private Button statisticsButton;
 
     public void handleStartSinglePlayerButtonAction(ActionEvent event) {
@@ -25,6 +28,10 @@ public class StartMenuFXMLController {
 
     public void handleStartMultiPlayerButtonAction(ActionEvent event) {
         ReversiApplication.getInstance().startMultiPlayerGame();
+    }
+
+    public void handleStartNetworkButtonAction(ActionEvent event) {
+        ReversiApplication.getInstance().startNetworkGame();
     }
 
     public void handleShowStatisticsButtonAction(ActionEvent event) {

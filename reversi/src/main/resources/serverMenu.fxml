@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ru.spbau.alferov.javahw.reversi.ui.ServerMenuFXMLController"
+          alignment="center" hgap="10" vgap="20">
+    <padding>
+        <Insets top="40" right="40" left="40" bottom="40" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="100" prefWidth="100"
+                           maxWidth="Infinity" hgrow="ALWAYS" />
+        <ColumnConstraints minWidth="100" prefWidth="100"
+                           maxWidth="Infinity" hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <Label fx:id="status" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="0"
+           GridPane.columnSpan="2" />
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT">Port:</Label>
+    <TextField fx:id="port" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <RadioButton fx:id="blackSide" GridPane.columnIndex="0" GridPane.rowIndex="2"
+                 GridPane.halignment="CENTER">Black</RadioButton>
+    <RadioButton fx:id="whiteSide" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                 GridPane.halignment="CENTER">White</RadioButton>
+
+    <Button fx:id="start" GridPane.columnIndex="1" GridPane.rowIndex="3"
+            GridPane.halignment="CENTER" onAction="#handleStart">Start</Button>
+</GridPane>

@@ -81,16 +81,21 @@ public class Game {
                     nextTurn = new Turn(-1, -1);
                 } else {
                     nextTurn = black.makeTurn(field);
+                    white.processOtherPlayerTurn(nextTurn);
                 }
             } else {
                 if (field.getAllowedTurns(SquareType.WHITE).isEmpty()) {
                     nextTurn = new Turn(-1, -1);
                 } else {
                     nextTurn = white.makeTurn(field);
+                    black.processOtherPlayerTurn(nextTurn);
                 }
             }
             field = Field.makeTurnInField(field, nextTurn);
             ReversiApplication.getInstance().updateField(field);
+        }
+        synchronized (gameEndIndicator) {
+            gameEndIndicator.notifyAll();
         }
         ReversiApplication.getInstance().getStatsController().add(new PlayedGame(
                 black.getName(), white.getName(), field.getBlackScore(), field.getWhiteScore()));
@@ -108,5 +113,25 @@ public class Game {
      */
     public @NotNull Player getWhitePlayer() {
         return white;
+    }
+
+    /**
+     * notifyAll() on this object is called in the end of the game.
+     */
+    private final Object gameEndIndicator = new Object();
+
+    /**
+     *
+     *
+     * @throws InterruptedException If interrupted when waiting
+     */
+    public void waitTillGameEnd() throws InterruptedException {
+        if (getResult() == Result.IN_PROGRESS) {
+            synchronized (gameEndIndicator) {
+                while (getResult() == Result.IN_PROGRESS) {
+                    gameEndIndicator.wait();
+                }
+            }
+        }
     }
 }

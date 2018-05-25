@@ -31,4 +31,9 @@ public abstract class Player {
      * selection screen).
      */
     public abstract String getName();
+
+    /**
+     * Processes the other player's turn
+     */
+    public void processOtherPlayerTurn(Turn turn) throws GameInterruptedException { }
 }
