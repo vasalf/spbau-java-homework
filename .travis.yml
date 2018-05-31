@@ -6,6 +6,7 @@ env:
   - TEST_DIR=linkedhashmap
   - TEST_DIR=matrices
   - TEST_DIR=maybe
+  - TEST_DIR=myjunit
   - TEST_DIR=reflector
   - TEST_DIR=streams
   - TEST_DIR=tree

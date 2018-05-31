@@ -18,7 +18,7 @@ public @interface Test {
      */
     final class NoExceptionHolder extends Throwable {
         /**
-         * One does not simply create instance.
+         * One does not simply create instances into Mordor.
          */
         private NoExceptionHolder() {}
     }
