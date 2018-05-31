@@ -16,17 +16,35 @@ import java.lang.reflect.Modifier;
 import java.time.Duration;
 import java.util.*;
 
-
+/**
+ * This is the main class for launching the tests.
+ *
+ * @param <T> Class with the tests
+ */
 public class Launcher<T> {
+    /**
+     * The class
+     */
     @NotNull
     private Class<T> inClass;
 
+    /**
+     * The default constructor of the class
+     */
     @NotNull
     private Constructor<T> defaultConstructor;
 
+    /**
+     * Target methods mapped to time when they are to be executed
+     */
     @NotNull
     private Map<CallWhen, List<TargetMethod<T>>> targetMethods;
 
+    /**
+     * Initializes the {@link #defaultConstructor}
+     *
+     * @throws LauncherException In case the class doesn't have an accessible default constructor
+     */
     private void initConstructor() throws LauncherException {
         try {
             defaultConstructor = inClass.getConstructor();
@@ -38,6 +56,11 @@ public class Launcher<T> {
         }
     }
 
+    /**
+     * Initializes the target methods map
+     *
+     * @throws LauncherException In case of misused annotations
+     */
     private void initMethodList() throws LauncherException {
         targetMethods = ImmutableMap.<CallWhen, List<TargetMethod<T>>>builder()
                 .put(CallWhen.TEST, new ArrayList<>())
@@ -52,6 +75,11 @@ public class Launcher<T> {
         }
     }
 
+    /**
+     * Constructs an instance of the tested class
+     *
+     * @throws LauncherException In case the class is abstract or there were exceptions in the constructor
+     */
     public T construct() throws LauncherException {
         try {
             return defaultConstructor.newInstance();
@@ -66,12 +94,20 @@ public class Launcher<T> {
         }
     }
 
+    /**
+     * Base constructor. Should not be called from outside of the package. Use {@link #launchTests(Class)}.
+     */
     private Launcher(@NotNull Class<T> inClass) throws LauncherException {
         this.inClass = inClass;
         initConstructor();
         initMethodList();
     }
 
+    /**
+     * Helper method for invoking non-test methods
+     *
+     * @throws LauncherException In case of failure in the non-test method
+     */
     private static <T> void invokeHelperMethod(@NotNull TargetMethod<T> method, @NotNull T onObject) throws LauncherException {
         try {
             method.invoke(onObject);
@@ -83,6 +119,20 @@ public class Launcher<T> {
         }
     }
 
+    /**
+     * <p>Launches all tests in the class.</p>
+     *
+     * <p>The requirements are:</p>
+     * <ul>
+     *     <li>There should be an accessible default constructor in the class.</li>
+     *     <li>The annotated methods should be "public void" and receive no arguments.</li>
+     *     <li>No method is annotated with more than one annotation.</li>
+     * </ul>
+     *
+     * @param inClass Class from which the tests are taken
+     * @return The invocation result
+     * @throws LauncherException In case of wrong test structure or failure while invoking the tests.
+     */
     @NotNull
     public static <T> InvocationResult launchTests(@NotNull Class<T> inClass) throws LauncherException {
         Launcher<T> launcher = new Launcher<>(inClass);

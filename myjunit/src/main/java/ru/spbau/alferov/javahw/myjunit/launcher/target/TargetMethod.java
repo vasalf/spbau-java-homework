@@ -13,31 +13,68 @@ import java.lang.reflect.Modifier;
 import java.time.Duration;
 import java.util.Optional;
 
+/**
+ * This is a base class for target methods of MyJUnit.
+ *
+ * @param <T> The class from which tests are taken
+ */
 public abstract class TargetMethod<T> {
+    /**
+     * The hold method
+     */
     @NotNull
     protected Method ofMethod;
 
+    /**
+     * When the method is called.
+     */
     @NotNull
     protected CallWhen targetType;
 
+    /**
+     * Invokes the method
+     *
+     * @param onObject On which object to invoke
+     * @return Time elapsed
+     * @throws InvocationFailure In case of unexpected exceptions in method
+     * @throws InvocationIgnored In case of ignored @Test method
+     */
     @NotNull
     public abstract Duration invoke(T onObject) throws InvocationFailure, InvocationIgnored;
 
+    /**
+     * @return When the method is called.
+     */
     @NotNull
     public CallWhen getTargetType() {
         return targetType;
     }
 
+    /**
+     * @return The method name.
+     */
     @NotNull
     public String getName() {
         return ofMethod.getName();
     }
 
+    /**
+     * The base constructor. This constructor should not be called from outside of the package: use
+     * {@link #createTargetMethod(Method)} instead.
+     */
     protected TargetMethod(@NotNull Method ofMethod, @NotNull CallWhen targetType) {
         this.ofMethod = ofMethod;
         this.targetType = targetType;
     }
 
+    /**
+     * Parses annotations of given method and returns the TargetMethod instance, if needed
+     *
+     * @param method The method from which to parse the annotations
+     * @param <T> The class from which the tests are taken
+     * @return None if the method is annotated, the TargetMethod instance otherwise
+     * @throws LauncherException In case of misused annotations or wrong method signature
+     */
     @NotNull
     public static <T> Optional<TargetMethod<T>> createTargetMethod(@NotNull Method method) throws LauncherException {
         @Nullable CallWhen callWhen = null;

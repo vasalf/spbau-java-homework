@@ -13,7 +13,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * This is the main class of the CLI application.
+ */
 public class MyJUnitCLI {
+    /**
+     * <p>This is the entry point of the CLI application.</p>
+     *
+     * <p>Two command line arguments should be passed to the application: the project root and the classpath.</p>
+     */
+    @SuppressWarnings("unchecked")
     public static void main(String args[]) {
         if (args.length != 2) {
             System.out.println("You should provide the project root and the class path as arguments");

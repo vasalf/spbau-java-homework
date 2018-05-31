@@ -11,11 +11,28 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 
+/**
+ * This is an override of {@link TargetMethod} for test methods
+ *
+ * @param <T> The class from which the test is taken.
+ */
 public class TestMethod<T> extends TargetMethod<T> {
+    /**
+     * Base constructor. Refer to {@link TargetMethod#TargetMethod(Method, CallWhen)}
+     */
     public TestMethod(Method method, CallWhen callWhen) {
         super(method, callWhen);
     }
 
+    /**
+     * Invokes the test on given object.
+     *
+     * @param onObject On which object to invoke
+     * @return Time elapsed
+     * @throws InvocationFailure In case of unexpected exception in the test
+     * @throws InvocationIgnored In case of ignored test
+     */
+    @NotNull
     @Override
     public Duration invoke(T onObject) throws InvocationFailure, InvocationIgnored {
         @NotNull Test annotation = ofMethod.getAnnotation(Test.class);
